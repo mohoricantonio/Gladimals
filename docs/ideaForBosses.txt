@@ -1,0 +1,12 @@
+After defeating each opponent the player unlock an ability: 
+Frog -> Poison
+Rabbit -> Jump
+Bee -> Double jump
+Wolves in pack -> give one pet helping the player
+Gorilla -> Climb to do some attacks
+Crocodile -> grab the opponent and throw 
+Bear -> scream to stun opponent
+Shark -> use the grab to bite and make damage
+elephant -> jolt on the ground
+Lion -> throw a crown on oppenent but need to recover it to reuse it
+
