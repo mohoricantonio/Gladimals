@@ -5,22 +5,24 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed;
-    public Transform orientation;
+    public float rotationSpeed = 10f;
     private float horizontalInput;
     private float verticalInput;
 
     private Vector3 moveDirection;
+    private Vector3 rotateDirection;
     private Rigidbody rb;
 
-    public float groundDrag;
+    public float drag;
     public LayerMask whatIsGround;
     private bool isGrounded;
     public float playerHeight;
 
     public float jumpForce;
     public float jumpCooldown;
-    public float airMultiplier;
     private bool readyToJump;
+
+    public Camera playerCamera;
 
 
     // Start is called before the first frame update
@@ -29,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump= true;
+        rb.drag = drag;
     }
 
     // Update is called once per frame
@@ -36,12 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         GetInput();
-
-        if (isGrounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
-
+        
         ControlSpeed();
     }
 
@@ -52,8 +50,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        if (isGrounded)
+        {
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            horizontalInput = 0f;
+            verticalInput = 0f;
+        }
+        
 
         if (Input.GetKey(KeyCode.Space) && isGrounded && readyToJump)
         {
@@ -64,17 +71,40 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Move()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        if(isGrounded)
-            rb.AddForce(moveDirection.normalized * movementSpeed * 10f, ForceMode.Force);
+        moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        if (verticalInput == -1){
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 180, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        }else if (verticalInput == 0 && horizontalInput == 1)
+        {
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y -90, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        }
+        else if (verticalInput == 0 && horizontalInput == -1)
+        {
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y+90, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        }
         else
-            rb.AddForce(moveDirection.normalized * movementSpeed * 10f * airMultiplier, ForceMode.Force);
+        {
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        }
+
+        Vector3 movementDirection = moveDirection.normalized;
+        Vector3 rotationDirection = rotateDirection.normalized;
+
+        if (isGrounded)
+            rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
+
+        if (movementDirection != Vector3.zero)
+        {
+            Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+        }
     }
     
     private void ControlSpeed()
     {
         Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        
 
         if(flatVelocity.magnitude > movementSpeed)
         {
