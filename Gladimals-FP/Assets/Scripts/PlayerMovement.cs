@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     private bool readyToJump;
 
+    private bool canDash;
+    private bool isDashing;
+    public float dashingPower = 100f;
+    public float dashingTime = 0.2f;
+    public float dashingCooldown = 2.0f;
+    private TrailRenderer trailRenderer;
+
     public Camera playerCamera;
 
 
@@ -32,11 +39,17 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         readyToJump= true;
         rb.drag = drag;
+        canDash = true;
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if (isDashing)
+        {
+            return;
+        }
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         GetInput();
         
@@ -45,6 +58,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
         Move();
     }
 
@@ -62,11 +79,16 @@ public class PlayerMovement : MonoBehaviour
         }
         
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded && readyToJump)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJumpCooldown), jumpCooldown);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
         }
     }
     private void Move()
@@ -121,5 +143,20 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumpCooldown()
     {
         readyToJump = true;
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        rb.useGravity = false;
+        rb.velocity = new Vector3(0f, 0f, movementSpeed * dashingPower);
+        trailRenderer.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        rb.useGravity = true;
+        trailRenderer.emitting = false;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 }
