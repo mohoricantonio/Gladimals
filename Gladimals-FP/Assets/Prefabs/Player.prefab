@@ -224,6 +224,9 @@ MonoBehaviour:
   playerHeight: 2
   jumpForce: 10
   jumpCooldown: 0.5
+  dashingPower: 200
+  dashingTime: 0.2
+  dashingCooldown: 2
   playerCamera: {fileID: 0}
 --- !u!96 &2349873346296597459
 TrailRenderer:

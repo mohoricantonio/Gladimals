@@ -24,9 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canDash;
     private bool isDashing;
-    public float dashingPower = 100f;
-    public float dashingTime = 0.2f;
-    public float dashingCooldown = 2.0f;
+    public float dashingPower;
+    public float dashingTime;
+    public float dashingCooldown;
     private TrailRenderer trailRenderer;
 
     public Camera playerCamera;
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         isDashing = true;
         rb.useGravity = false;
-        rb.velocity = new Vector3(0f, 0f, movementSpeed * dashingPower);
+        rb.AddForce(new Vector3(0f, 0f, movementSpeed * dashingPower));
         trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         rb.useGravity = true;
