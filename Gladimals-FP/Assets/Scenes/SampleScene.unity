@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 461436295}
   - component: {fileID: 461436298}
   - component: {fileID: 461436299}
+  - component: {fileID: 461436300}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -280,7 +281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461436294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 74.75, y: 0.52, z: 10.069997}
+  m_LocalPosition: {x: 70.9, y: 0.52, z: -12.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -325,6 +326,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 5
   player: {fileID: 168782770}
+  isGrounded: 1
+--- !u!114 &461436300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461436294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a15af7708ef5b4993a7a99ac9fe02b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 168782770}
+  jumpForce: 10
+  jumpRange: 5
 --- !u!4 &470537755 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6480944743298434140, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
@@ -717,7 +734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1149209026412387635, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.1782856
+      value: -28.42
       objectReference: {fileID: 0}
     - target: {fileID: 1149209026412387635, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: m_LocalRotation.w
