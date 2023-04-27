@@ -150,7 +150,8 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         isDashing = true;
         rb.useGravity = false;
-        rb.AddForce(new Vector3(0f, 0f, movementSpeed * dashingPower));
+        moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        rb.AddForce(moveDirection * dashingPower * movementSpeed);
         trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         rb.useGravity = true;
