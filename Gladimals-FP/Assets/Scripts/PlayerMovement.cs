@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     private bool readyToJump;
+    private bool isDoubleJumping;
 
     private bool canDash;
     private bool isDashing;
@@ -41,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         rb.drag = drag;
         canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
+        isDoubleJumping = false;
     }
 
     // Update is called once per frame
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        if (isGrounded) isDoubleJumping = false;
         GetInput();
         
         ControlSpeed();
@@ -67,17 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetInput()
     {
-        if (isGrounded)
-        {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
-        }
-        else
-        {
-            horizontalInput = 0f;
-            verticalInput = 0f;
-        }
-        
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
@@ -85,7 +79,11 @@ public class PlayerMovement : MonoBehaviour
             Jump();
             Invoke(nameof(ResetJumpCooldown), jumpCooldown);
         }
-
+        if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && !isDoubleJumping)
+        {
+            Jump();
+            isDoubleJumping = true;
+        }
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
@@ -112,8 +110,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementDirection = moveDirection.normalized;
         Vector3 rotationDirection = rotateDirection.normalized;
 
-        if (isGrounded)
-            rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
+
+        rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
 
         if (movementDirection != Vector3.zero)
         {
