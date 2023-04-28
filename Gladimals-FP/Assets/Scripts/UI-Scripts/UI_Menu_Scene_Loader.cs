@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Tree_Loader : MonoBehaviour
+public class UI_Menu_Scene_Loader : MonoBehaviour
 {
     public GameObject treePrefab;
 
     void Start()
     {
         CreateTreeCircles(9, new Vector3(0f,0f,0f), 10);
-        CreateTreeCircles(18, new Vector3(0f,0f,0f), 15);
-        CreateTreeCircles(27, new Vector3(0f,0f,0f), 20);
+        CreateTreeCircles(18, new Vector3(0f,0f,0f), 13);
+        CreateTreeCircles(27, new Vector3(0f,0f,0f), 16);
+        CreateTreeCircles(36, new Vector3(0f,0f,0f), 19);
+        CreateTreeCircles(45, new Vector3(0f,0f,0f), 21);
     }
 
     public void CreateTreeCircles (int num, Vector3 point, float radius)

@@ -9,11 +9,11 @@ public class CameraRunner : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.E))
         {
-            // rotate left
+            transform.RotateAround(Vector3.zero, Vector3.up, -30 * Time.deltaTime);
         }
         else if(Input.GetKey(KeyCode.Q))
         {
-            // rotate right
+            transform.RotateAround(Vector3.zero, Vector3.up, 30 * Time.deltaTime);
         }
     }
 }
