@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (!isAttacking){
             if (time < timeBetweenAttacks/2){
                 GetComponent<EnemyMovement>().TurnArroundPlayerRight();
@@ -34,6 +35,6 @@ public class EnemyAI : MonoBehaviour
                 isAttacking = true;
             }
             time += Time.deltaTime;
-        }
+        }*/
     }
 }
