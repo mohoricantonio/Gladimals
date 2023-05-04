@@ -21,6 +21,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     private bool readyToJump;
+    private bool isDoubleJumping;
+
+    private bool canDash;
+    private bool isDashing;
+    public float dashingPower;
+    public float dashingTime;
+    public float dashingCooldown;
+    private TrailRenderer trailRenderer;
 
     public Camera playerCamera;
 
@@ -32,12 +40,20 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         readyToJump= true;
         rb.drag = drag;
+        canDash = true;
+        trailRenderer = GetComponent<TrailRenderer>();
+        isDoubleJumping = false;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if (isDashing)
+        {
+            return;
+        }
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        if (isGrounded) isDoubleJumping = false;
         GetInput();
         
         ControlSpeed();
@@ -45,28 +61,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
         Move();
     }
 
     private void GetInput()
     {
-        if (isGrounded)
-        {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
-        }
-        else
-        {
-            horizontalInput = 0f;
-            verticalInput = 0f;
-        }
-        
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded && readyToJump)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJumpCooldown), jumpCooldown);
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && !isDoubleJumping)
+        {
+            Jump();
+            isDoubleJumping = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
         }
     }
     private void Move()
@@ -90,8 +110,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementDirection = moveDirection.normalized;
         Vector3 rotationDirection = rotateDirection.normalized;
 
-        if (isGrounded)
-            rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
+
+        rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
 
         if (movementDirection != Vector3.zero)
         {
@@ -121,5 +141,21 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumpCooldown()
     {
         readyToJump = true;
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        rb.useGravity = false;
+        moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        rb.AddForce(moveDirection * dashingPower * movementSpeed);
+        trailRenderer.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        rb.useGravity = true;
+        trailRenderer.emitting = false;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 }
