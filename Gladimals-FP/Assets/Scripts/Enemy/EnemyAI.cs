@@ -1,9 +1,22 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
     public float time;
-    public float timeBetweenAttacks = 20f;
+    public float mqxCycleTime = 10f;
+    public float minCycleTime = 2f;
+    public Hashtable cycle = new Hashtable();
+
+    private void Awake()
+    {
+        cycle.Add("CheckDistance", Random.Range(minCycleTime, mqxCycleTime));
+        cycle.Add("StrafeLeft", Random.Range(minCycleTime, mqxCycleTime));
+        cycle.Add("StrafeRight", Random.Range(minCycleTime, mqxCycleTime));
+
+    }
+
+
     public Animator animator;
     public EnemyMovement enemyMovement;
     public Transform player;
@@ -17,23 +30,27 @@ public class EnemyAI : MonoBehaviour
 
         if (!isAttacking)
         {
-            if (distanceToPlayer > 10f)
+            if (time < (float)cycle["CheckDistance"])
+
             {
-                Run();
+                if (distanceToPlayer > 10f)
+                {
+                    Run();
+                }
+                else if (distanceToPlayer < 5f)
+                {
+                    RunBackwards();
+                }
             }
-            else if (distanceToPlayer < 5f)
-            {
-                RunBackwards();
-            }
-            else if (time < timeBetweenAttacks / 2)
+            else if (time >= (float)cycle["CheckDistance"] && time < (float)cycle["StrafeLeft"])
             {
                 StrafeRight();
             }
-            else if (time >= timeBetweenAttacks / 2 && time < timeBetweenAttacks)
+            else if (time >= (float)cycle["StrafeLeft"] && time < (float)cycle["StrafeRight"])
             {
                 StrafeLeft();
             }
-            else if (time >= timeBetweenAttacks)
+            else if (time >= (float)cycle["StrafeRight"])
             {
                 JumpAttack();
             }
@@ -47,6 +64,7 @@ public class EnemyAI : MonoBehaviour
             {
                 animator.SetBool("JumpAttack", false);
                 Debug.Log("JumpAttack ended");
+                updateCycleTime();
             }
         }
 
@@ -90,5 +108,16 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("isRunningBackward", false);
         animator.SetBool("isSideSteppingLeft", false);
         animator.SetBool("isSideSteppingRight", false);
+    }
+
+    private void updateCycleTime()
+    {
+        cycle["CheckDistance"] = Random.Range(minCycleTime, mqxCycleTime);
+        cycle["StrafeLeft"] = Random.Range(minCycleTime, mqxCycleTime);
+        cycle["StrafeRight"] = Random.Range(minCycleTime, mqxCycleTime);
+
+        Debug.Log("CheckDistance: " + cycle["CheckDistance"]);
+        Debug.Log("StrafeLeft: " + cycle["StrafeLeft"]);
+        Debug.Log("StrafeRight: " + cycle["StrafeRight"]);
     }
 }
