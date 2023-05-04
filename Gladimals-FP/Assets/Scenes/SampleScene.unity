@@ -559,6 +559,11 @@ MonoBehaviour:
   rotationXMinMax: {x: -40, y: 40}
   minXrotation: -4
   maxXrotation: 25
+--- !u!4 &972523999 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1149209026412387635, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+  m_PrefabInstance: {fileID: 1866756439}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1866756439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -673,6 +678,8 @@ GameObject:
   - component: {fileID: 1895372592}
   - component: {fileID: 1895372591}
   - component: {fileID: 1895372594}
+  - component: {fileID: 1895372595}
+  - component: {fileID: 1895372596}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -766,3 +773,34 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1895372595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895372590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d63e605f53daab4fa7843881a0e75ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+  timeBetweenAttacks: 10
+  animator: {fileID: 1895372594}
+  enemyMovement: {fileID: 1895372596}
+  player: {fileID: 972523999}
+--- !u!114 &1895372596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895372590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69678d134342aa94698c7ae9ea1b5dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 5
+  isGrounded: 1
