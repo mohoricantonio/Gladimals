@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         enemyMovement.FocusTarget(player.transform);
-        bool isAttacking = animator.GetBool("JumpAttack");
+        bool isAttacking = animator.GetBool("JumpAttack") || animator.GetBool("kickAttack") || animator.GetBool("slashAttack");
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (!isAttacking)
@@ -49,19 +49,35 @@ public class EnemyAI : MonoBehaviour
             }
             else if (time >= (float)cycle["StrafeRight"])
             {
-                JumpAttack();
+                SlashAttack();
             }
             time += Time.deltaTime;
         }
         else
         {
-            bool animationIsJumpAttack = animator.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack");
-            float animationNormalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            AnimatorStateInfo currentAnnimInfo = animator.GetCurrentAnimatorStateInfo(0);
+            bool animationIsJumpAttack = currentAnnimInfo.IsName("JumpAttack");
+            bool animationIsKickAttack = currentAnnimInfo.IsName("KickAttack");
+            bool animationIsSlashAttack = currentAnnimInfo.IsName("SlashAttack");
+            float animationNormalizedTime = currentAnnimInfo.normalizedTime;
+            Debug.Log(animationIsSlashAttack);
             Debug.Log("animationNormalizedTime: " + animationNormalizedTime);
             if (animationIsJumpAttack && animationNormalizedTime >= 1f)
             {
                 animator.SetBool("JumpAttack", false);
                 Debug.Log("JumpAttack ended");
+                updateCycleTime();
+            }
+            else if (animationIsKickAttack && animationNormalizedTime >= 1f)
+            {
+                animator.SetBool("kickAttack", false);
+                Debug.Log("kickAttack ended");
+                updateCycleTime();
+            }
+            else if (animationIsSlashAttack && animationNormalizedTime >= 1f)
+            {
+                animator.SetBool("slashAttack", false);
+                Debug.Log("slashAttack ended");
                 updateCycleTime();
             }
             time = 0f;
@@ -73,6 +89,18 @@ public class EnemyAI : MonoBehaviour
     {
         StopMooving();
         animator.SetBool("JumpAttack", true);
+    }
+
+    private void KickAttack()
+    {
+        StopMooving();
+        animator.SetBool("kickAttack", true);
+    }
+
+    private void SlashAttack()
+    {
+        StopMooving();
+        animator.SetBool("slashAttack", true);
     }
 
     private void StrafeLeft()
