@@ -22,6 +22,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        
         enemyMovement.FocusTarget(player.transform);
         bool isAttacking = animator.GetBool("JumpAttack") || animator.GetBool("kickAttack") || animator.GetBool("slashAttack");
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
@@ -82,7 +83,7 @@ public class EnemyAI : MonoBehaviour
             }
             time = 0f;
         }
-
+        
     }
 
     private void JumpAttack()
