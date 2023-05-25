@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public void Play()
     {
         mainMenu.SetActive(false);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("enemy scene");
     }
 
     public void AboutMenu()
