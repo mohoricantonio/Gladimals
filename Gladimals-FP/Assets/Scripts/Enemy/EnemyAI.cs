@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour
     public float mqxCycleTime = 10f;
     public float minCycleTime = 2f;
     public Hashtable cycle = new Hashtable();
+    public float attackRange = 2f;
+    public int comboKickJumpState = 0;
 
     private void Awake()
     {
@@ -29,6 +31,10 @@ public class EnemyAI : MonoBehaviour
 
         if (!isAttacking)
         {
+            if(AttackIfPlayerIsClose(distanceToPlayer))
+            {
+                return;
+            }
             if (time < (float)cycle["CheckDistance"])
             {
                 if (distanceToPlayer > 10f)
@@ -38,6 +44,10 @@ public class EnemyAI : MonoBehaviour
                 else if (distanceToPlayer < 5f)
                 {
                     RunBackwards();
+                }
+                else
+                {
+                    StopMooving();
                 }
             }
             else if (time >= (float)cycle["CheckDistance"] && time < (float)cycle["StrafeLeft"])
@@ -50,7 +60,7 @@ public class EnemyAI : MonoBehaviour
             }
             else if (time >= (float)cycle["StrafeRight"])
             {
-                SlashAttack();
+                JumpAttack();
             }
             time += Time.deltaTime;
         }
@@ -61,29 +71,60 @@ public class EnemyAI : MonoBehaviour
             bool animationIsKickAttack = currentAnnimInfo.IsName("KickAttack");
             bool animationIsSlashAttack = currentAnnimInfo.IsName("SlashAttack");
             float animationNormalizedTime = currentAnnimInfo.normalizedTime;
-            Debug.Log(animationIsSlashAttack);
             Debug.Log("animationNormalizedTime: " + animationNormalizedTime);
-            if (animationIsJumpAttack && animationNormalizedTime >= 1f)
-            {
-                animator.SetBool("JumpAttack", false);
-                Debug.Log("JumpAttack ended");
-                updateCycleTime();
+
+            if (comboKickJumpState == 1){
+                if (animationIsKickAttack && animationNormalizedTime >= 1f){
+                    animator.SetBool("kickAttack", false);
+                    JumpAttack();
+                    comboKickJumpState = 0;
+                    Debug.Log("Second attack started");
+                }
             }
-            else if (animationIsKickAttack && animationNormalizedTime >= 1f)
-            {
-                animator.SetBool("kickAttack", false);
-                Debug.Log("kickAttack ended");
-                updateCycleTime();
-            }
-            else if (animationIsSlashAttack && animationNormalizedTime >= 1f)
-            {
-                animator.SetBool("slashAttack", false);
-                Debug.Log("slashAttack ended");
-                updateCycleTime();
+            else{
+                if (animationIsJumpAttack && animationNormalizedTime >= 1f)
+                {
+                    animator.SetBool("JumpAttack", false);
+                    Debug.Log("JumpAttack ended");
+                    updateCycleTime();
+                }
+                else if (animationIsKickAttack && animationNormalizedTime >= 1f)
+                {
+                    animator.SetBool("kickAttack", false);
+                    Debug.Log("kickAttack ended");
+                    updateCycleTime();
+                }
+                else if (animationIsSlashAttack && animationNormalizedTime >= 1f)
+                {
+                    animator.SetBool("slashAttack", false);
+                    Debug.Log("slashAttack ended");
+                    updateCycleTime();
+                }
+                else
+                {
+                    //Debug.Log("animation is not over");
+                }
             }
             time = 0f;
         }
         
+    }
+
+    private bool AttackIfPlayerIsClose(float distanceToPlayer)
+    {
+        if (distanceToPlayer < attackRange)
+        {
+            ComboKickJumpAttack();
+            return true;
+        }
+        return false;
+    }
+
+    private void ComboKickJumpAttack()
+    {
+        KickAttack();
+        comboKickJumpState = 1;
+        Debug.Log("ComboKickJumpAttack started");
     }
 
     private void JumpAttack()
@@ -142,8 +183,8 @@ public class EnemyAI : MonoBehaviour
         cycle["StrafeLeft"] = Random.Range(minCycleTime, mqxCycleTime) + (float)cycle["CheckDistance"];
         cycle["StrafeRight"] = Random.Range(minCycleTime, mqxCycleTime) + (float)cycle["StrafeLeft"];
 
-        Debug.Log("CheckDistance: " + cycle["CheckDistance"]);
-        Debug.Log("StrafeLeft: " + cycle["StrafeLeft"]);
-        Debug.Log("StrafeRight: " + cycle["StrafeRight"]);
+        //Debug.Log("CheckDistance: " + cycle["CheckDistance"]);
+        //Debug.Log("StrafeLeft: " + cycle["StrafeLeft"]);
+        //Debug.Log("StrafeRight: " + cycle["StrafeRight"]);
     }
 }
