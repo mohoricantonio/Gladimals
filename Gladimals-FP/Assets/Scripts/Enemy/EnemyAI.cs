@@ -47,7 +47,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    StopMooving();
+                    StopMoovingAnimations();
                 }
             }
             else if (time >= (float)cycle["CheckDistance"] && time < (float)cycle["StrafeLeft"])
@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour
             bool animationIsKickAttack = currentAnnimInfo.IsName("KickAttack");
             bool animationIsSlashAttack = currentAnnimInfo.IsName("SlashAttack");
             float animationNormalizedTime = currentAnnimInfo.normalizedTime;
-            Debug.Log("animationNormalizedTime: " + animationNormalizedTime);
+            //Debug.Log("animationNormalizedTime: " + animationNormalizedTime);
 
             if (comboKickJumpState == 1){
                 if (animationIsKickAttack && animationNormalizedTime >= 1f){
@@ -129,47 +129,47 @@ public class EnemyAI : MonoBehaviour
 
     private void JumpAttack()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("JumpAttack", true);
     }
 
     private void KickAttack()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("kickAttack", true);
     }
 
     private void SlashAttack()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("slashAttack", true);
     }
 
     private void StrafeLeft()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isSideSteppingLeft", true);
     }
 
     private void StrafeRight()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isSideSteppingRight", true);
     }
 
     private void Run()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isRunning", true);
     }
 
     private void RunBackwards()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isRunningBackward", true);
     }
 
-    private void StopMooving()
+    private void StopMoovingAnimations()
     {
         animator.SetBool("isRunning", false);
         animator.SetBool("isRunningBackward", false);
