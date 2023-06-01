@@ -12,6 +12,11 @@ public class EnemyAI : MonoBehaviour
     public Hashtable cycle = new Hashtable();
     public float attackRange = 2f;
     public int comboKickJumpState = 0;
+    public float kickBackForce = 600f;
+    public float kickUpForce = 200f;
+    public int closeAttackCooldown = 0;
+    public int closeAttackCooldownMax = 500;
+    public int kickAttackPlayerCantMooveTime = 250;
 
     private void Awake()
     {
@@ -112,10 +117,15 @@ public class EnemyAI : MonoBehaviour
 
     private bool AttackIfPlayerIsClose(float distanceToPlayer)
     {
-        if (distanceToPlayer < attackRange)
+        if (distanceToPlayer < attackRange && closeAttackCooldown == 0)
         {
             ComboKickJumpAttack();
+            closeAttackCooldown = closeAttackCooldownMax;
             return true;
+        }
+        else if (closeAttackCooldown > 0)
+        {
+            closeAttackCooldown--;
         }
         return false;
     }
@@ -186,5 +196,19 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("CheckDistance: " + cycle["CheckDistance"]);
         //Debug.Log("StrafeLeft: " + cycle["StrafeLeft"]);
         //Debug.Log("StrafeRight: " + cycle["StrafeRight"]);
+    }
+
+    public void KickAnimationEvent(){
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        
+        if (distanceToPlayer < attackRange)
+        {
+            player.GetComponent<Rigidbody>().AddForce(transform.forward * kickBackForce + Vector3.up * kickUpForce);
+            player.GetComponent<PlayerMovement>().cantMoove(kickAttackPlayerCantMooveTime);
+        }
+        else
+        {
+            comboKickJumpState = 0;
+        }
     }
 }
