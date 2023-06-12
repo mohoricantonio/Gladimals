@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         animate = "";
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        readyToJump= true;
+        readyToJump = true;
         rb.drag = drag;
         canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         if (isGrounded) isDoubleJumping = false;
         GetInput();
-        
+
         ControlSpeed();
     }
 
@@ -79,18 +79,20 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        
-        if(horizontalInput == 0 && verticalInput == 0)
+
+        if (horizontalInput == 0 && verticalInput == 0)
             isMoving = false;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
+            ResetAnimations();
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJumpCooldown), jumpCooldown);
         }
         if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && !isDoubleJumping)
         {
+            ResetAnimations();
             Jump();
             isDoubleJumping = true;
         }
@@ -99,31 +101,30 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        if(isMoving == false)
-        {
-            animate = "";
-            isMoving = false;
-            anim.SetBool("RunBack", false);
-            anim.SetBool("RunRight", false);
-            anim.SetBool("RunLeft", false);
-            anim.SetBool("RunFD", false);
-        }
     }
     private void Move()
     {
+
+        if (isMoving == false)
+        {
+            ResetAnimations();
+        }
+
         moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
-        if (verticalInput == -1){
+        if (verticalInput == -1)
+        {
             animate = "RunBack";
             rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 180, 0) * new Vector3(horizontalInput, 0, verticalInput);
-        }else if (verticalInput == 0 && horizontalInput == 1)
+        }
+        else if (verticalInput == 0 && horizontalInput == 1)
         {
             animate = "RunRight";
-            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y -90, 0) * new Vector3(horizontalInput, 0, verticalInput);
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 90, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
         else if (verticalInput == 0 && horizontalInput == -1)
         {
             animate = "RunLeft";
-            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y+90, 0) * new Vector3(horizontalInput, 0, verticalInput);
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y + 90, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
         else
         {
@@ -142,38 +143,59 @@ public class PlayerMovement : MonoBehaviour
             Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
-            if(isMoving == false)
+            isMoving = true;
+            switch (animate)
             {
-                Debug.Log(animate);
-                isMoving = true;
-                switch (animate)
-                { 
-                    case "RunBack":
-                        anim.SetBool("RunBack", true);
-                        break;
-                    case "RunRight":
-                        anim.SetBool("RunRight", true);
-                        break;
-                    case "RunLeft":
-                        anim.SetBool("RunLeft", true);
-                        break;
-                    case "RunFD":
-                        anim.SetBool("RunFD", true);
-                        break;
-                    default:
-                        break;
-                    }
+                case "RunBack":
+                    anim.SetBool("RunBack", true);
+                    anim.SetBool("RunRight", false);
+                    anim.SetBool("RunLeft", false);
+                    anim.SetBool("RunFD", false);
+                    break;
+                case "RunRight":
+                    anim.SetBool("RunBack", false);
+                    anim.SetBool("RunRight", true);
+                    anim.SetBool("RunLeft", false);
+                    anim.SetBool("RunFD", false);
+                    break;
+                case "RunLeft":
+                    anim.SetBool("RunBack", false);
+                    anim.SetBool("RunRight", false);
+                    anim.SetBool("RunLeft", true);
+                    anim.SetBool("RunFD", false);
+                    break;
+                case "RunFD":
+                    anim.SetBool("RunBack", false);
+                    anim.SetBool("RunRight", false);
+                    anim.SetBool("RunLeft", false);
+                    anim.SetBool("RunFD", true);
+                    break;
+                default:
+                    break;
             }
-            
+
+        }
+        else
+        {
+            isMoving = false;
         }
     }
-    
+
+    private void ResetAnimations()
+    {
+        animate = "";
+        anim.SetBool("RunBack", false);
+        anim.SetBool("RunRight", false);
+        anim.SetBool("RunLeft", false);
+        anim.SetBool("RunFD", false);
+    }
+
     private void ControlSpeed()
     {
         Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        
 
-        if(flatVelocity.magnitude > movementSpeed)
+
+        if (flatVelocity.magnitude > movementSpeed)
         {
             Vector3 limitedVelocity = flatVelocity.normalized * movementSpeed;
             rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
