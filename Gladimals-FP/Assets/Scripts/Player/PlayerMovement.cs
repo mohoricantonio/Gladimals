@@ -32,10 +32,17 @@ public class PlayerMovement : MonoBehaviour
 
     public Camera playerCamera;
 
+    private Animator anim;
+    private string animate;
+    private bool isMoving;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
+        isMoving = false;
+        animate = "";
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump= true;
@@ -47,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         if (isDashing)
         {
             return;
@@ -72,6 +79,9 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        
+        if(horizontalInput == 0 && verticalInput == 0)
+            isMoving = false;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
@@ -88,22 +98,36 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+
+        if(isMoving == false)
+        {
+            animate = "";
+            isMoving = false;
+            anim.SetBool("RunBack", false);
+            anim.SetBool("RunRight", false);
+            anim.SetBool("RunLeft", false);
+            anim.SetBool("RunFD", false);
+        }
     }
     private void Move()
     {
         moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         if (verticalInput == -1){
+            animate = "RunBack";
             rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 180, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }else if (verticalInput == 0 && horizontalInput == 1)
         {
+            animate = "RunRight";
             rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y -90, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
         else if (verticalInput == 0 && horizontalInput == -1)
         {
+            animate = "RunLeft";
             rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y+90, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
         else
         {
+            animate = "RunFD";
             rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
 
@@ -118,6 +142,29 @@ public class PlayerMovement : MonoBehaviour
             Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+            if(isMoving == false)
+            {
+                Debug.Log(animate);
+                isMoving = true;
+                switch (animate)
+                { 
+                    case "RunBack":
+                        anim.SetBool("RunBack", true);
+                        break;
+                    case "RunRight":
+                        anim.SetBool("RunRight", true);
+                        break;
+                    case "RunLeft":
+                        anim.SetBool("RunLeft", true);
+                        break;
+                    case "RunFD":
+                        anim.SetBool("RunFD", true);
+                        break;
+                    default:
+                        break;
+                    }
+            }
+            
         }
     }
     
@@ -135,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        //anim.SetTrigger("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
