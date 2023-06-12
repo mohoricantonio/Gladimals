@@ -85,14 +85,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
-            ResetAnimations();
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJumpCooldown), jumpCooldown);
         }
         if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && !isDoubleJumping)
         {
-            ResetAnimations();
             Jump();
             isDoubleJumping = true;
         }
