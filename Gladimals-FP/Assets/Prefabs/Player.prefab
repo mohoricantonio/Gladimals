@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7
-  rotationSpeed: 10
+  rotationSpeed: 5
   drag: 0
   whatIsGround:
     serializedVersion: 2

@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
         if (isGrounded) isDoubleJumping = false;
         GetInput();
 
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
 
-        if (isMoving == false)
+        if (isMoving == false || isGrounded == false)
         {
             ResetAnimations();
         }
@@ -142,36 +142,38 @@ public class PlayerMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
             isMoving = true;
-            switch (animate)
+            if (isGrounded)
             {
-                case "RunBack":
-                    anim.SetBool("RunBack", true);
-                    anim.SetBool("RunRight", false);
-                    anim.SetBool("RunLeft", false);
-                    anim.SetBool("RunFD", false);
-                    break;
-                case "RunRight":
-                    anim.SetBool("RunBack", false);
-                    anim.SetBool("RunRight", true);
-                    anim.SetBool("RunLeft", false);
-                    anim.SetBool("RunFD", false);
-                    break;
-                case "RunLeft":
-                    anim.SetBool("RunBack", false);
-                    anim.SetBool("RunRight", false);
-                    anim.SetBool("RunLeft", true);
-                    anim.SetBool("RunFD", false);
-                    break;
-                case "RunFD":
-                    anim.SetBool("RunBack", false);
-                    anim.SetBool("RunRight", false);
-                    anim.SetBool("RunLeft", false);
-                    anim.SetBool("RunFD", true);
-                    break;
-                default:
-                    break;
+                switch (animate)
+                {
+                    case "RunBack":
+                        anim.SetBool("RunBack", true);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", false);
+                        break;
+                    case "RunRight":
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", true);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", false);
+                        break;
+                    case "RunLeft":
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", true);
+                        anim.SetBool("RunFD", false);
+                        break;
+                    case "RunFD":
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", true);
+                        break;
+                    default:
+                        break;
+                }
             }
-
         }
         else
         {
@@ -202,7 +204,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        //anim.SetTrigger("Jump");
+        ResetAnimations();
+        anim.SetTrigger("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
