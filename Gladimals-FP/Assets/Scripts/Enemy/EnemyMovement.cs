@@ -2,13 +2,22 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float movementSpeed = 5f;
-    private float rotationSpeed = 5f;
-    private float rotationDistanceToPlayer = 10f;
-    [SerializeField]
-    public bool isGrounded = true;
+    public float rotationSpeed = 5f;
+    public bool goToPlayer = false;
+    public Rigidbody rb;
+    public float JumpAttackMovementSpeed = 3f;
+    public float JumpAttackJumpForce = 9f;
 
+    private void Start() {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update() {
+        if(goToPlayer){
+            float distanceToPlayer = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * distanceToPlayer * JumpAttackMovementSpeed);
+        }
+    }
 
     public void FocusTarget(Transform target)
     {
@@ -20,5 +29,14 @@ public class EnemyMovement : MonoBehaviour
 
         // Smoothly rotate towards the player
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    public void Jump(){
+        rb.AddForce(Vector3.up * JumpAttackJumpForce, ForceMode.Impulse);
+        goToPlayer = true;
+    }
+
+    public void StopGoToPlayer(){
+        goToPlayer = false;
     }
 }

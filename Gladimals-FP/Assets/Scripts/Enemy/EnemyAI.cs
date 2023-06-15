@@ -12,6 +12,11 @@ public class EnemyAI : MonoBehaviour
     public Hashtable cycle = new Hashtable();
     public float attackRange = 2f;
     public int comboKickJumpState = 0;
+    public float kickBackForce = 600f;
+    public float kickUpForce = 200f;
+    public int closeAttackCooldown = 0;
+    public int closeAttackCooldownMax = 500;
+    public int kickAttackPlayerCantMooveTime = 250;
 
     private void Awake()
     {
@@ -47,7 +52,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    StopMooving();
+                    StopMoovingAnimations();
                 }
             }
             else if (time >= (float)cycle["CheckDistance"] && time < (float)cycle["StrafeLeft"])
@@ -71,7 +76,7 @@ public class EnemyAI : MonoBehaviour
             bool animationIsKickAttack = currentAnnimInfo.IsName("KickAttack");
             bool animationIsSlashAttack = currentAnnimInfo.IsName("SlashAttack");
             float animationNormalizedTime = currentAnnimInfo.normalizedTime;
-            Debug.Log("animationNormalizedTime: " + animationNormalizedTime);
+            //Debug.Log("animationNormalizedTime: " + animationNormalizedTime);
 
             if (comboKickJumpState == 1){
                 if (animationIsKickAttack && animationNormalizedTime >= 1f){
@@ -112,10 +117,15 @@ public class EnemyAI : MonoBehaviour
 
     private bool AttackIfPlayerIsClose(float distanceToPlayer)
     {
-        if (distanceToPlayer < attackRange)
+        if (distanceToPlayer < attackRange && closeAttackCooldown == 0)
         {
             ComboKickJumpAttack();
+            closeAttackCooldown = closeAttackCooldownMax;
             return true;
+        }
+        else if (closeAttackCooldown > 0)
+        {
+            closeAttackCooldown--;
         }
         return false;
     }
@@ -129,47 +139,47 @@ public class EnemyAI : MonoBehaviour
 
     private void JumpAttack()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("JumpAttack", true);
     }
 
     private void KickAttack()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("kickAttack", true);
     }
 
     private void SlashAttack()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("slashAttack", true);
     }
 
     private void StrafeLeft()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isSideSteppingLeft", true);
     }
 
     private void StrafeRight()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isSideSteppingRight", true);
     }
 
     private void Run()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isRunning", true);
     }
 
     private void RunBackwards()
     {
-        StopMooving();
+        StopMoovingAnimations();
         animator.SetBool("isRunningBackward", true);
     }
 
-    private void StopMooving()
+    private void StopMoovingAnimations()
     {
         animator.SetBool("isRunning", false);
         animator.SetBool("isRunningBackward", false);
@@ -186,5 +196,19 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("CheckDistance: " + cycle["CheckDistance"]);
         //Debug.Log("StrafeLeft: " + cycle["StrafeLeft"]);
         //Debug.Log("StrafeRight: " + cycle["StrafeRight"]);
+    }
+
+    public void KickAnimationEvent(){
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        
+        if (distanceToPlayer < attackRange)
+        {
+            player.GetComponent<Rigidbody>().AddForce(transform.forward * kickBackForce + Vector3.up * kickUpForce);
+            player.GetComponent<PlayerMovement>().cantMoove(kickAttackPlayerCantMooveTime);
+        }
+        else
+        {
+            comboKickJumpState = 0;
+        }
     }
 }

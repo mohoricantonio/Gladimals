@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
 
     public Camera playerCamera;
 
+    public bool canMoove = true;
+    public int canMooveCooldown = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +51,16 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (isDashing)
+        if (isDashing || !canMoove)
         {
+            if (canMooveCooldown > 0)
+            {
+                canMooveCooldown--;
+            }
+            else
+            {
+                canMoove = true;
+            }
             return;
         }
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
@@ -61,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        if (isDashing || !canMoove)
         {
             return;
         }
@@ -157,5 +168,11 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
+
+    public void cantMoove(int time)
+    {
+        canMoove = false;
+        canMooveCooldown = time;
     }
 }

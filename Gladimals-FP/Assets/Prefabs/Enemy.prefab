@@ -125,6 +125,8 @@ MonoBehaviour:
   time: 0
   mqxCycleTime: 10
   minCycleTime: 2
+  attackRange: 2
+  comboKickJumpState: 0
 --- !u!114 &4458749769794497432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,8 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 895e0c920a1eca34caf63a4ba5b4aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
-  isGrounded: 1
+  rotationSpeed: 5
 --- !u!1001 &751609459877972701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195,7 +196,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: X Bot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 5b3a9584b8b8c3143824fabb8c0a601c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
