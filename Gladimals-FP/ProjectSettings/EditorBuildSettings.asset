@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/enemy scene.unity
+    path: Assets/Scenes/HealthBar.unity
     guid: 361646e55b93a324db1b313eca9416fd
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
