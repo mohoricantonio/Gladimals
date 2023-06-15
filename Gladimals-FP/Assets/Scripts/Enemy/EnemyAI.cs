@@ -198,17 +198,5 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("StrafeRight: " + cycle["StrafeRight"]);
     }
 
-    public void KickAnimationEvent(){
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        
-        if (distanceToPlayer < attackRange)
-        {
-            player.GetComponent<Rigidbody>().AddForce(transform.forward * kickBackForce + Vector3.up * kickUpForce);
-            player.GetComponent<PlayerMovement>().cantMoove(kickAttackPlayerCantMooveTime);
-        }
-        else
-        {
-            comboKickJumpState = 0;
-        }
-    }
+    
 }

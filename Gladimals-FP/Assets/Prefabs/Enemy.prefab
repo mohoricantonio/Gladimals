@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4874807840014997820}
   - component: {fileID: 4580179678994728071}
   - component: {fileID: 509257610518517846}
-  - component: {fileID: 750269992214747157}
   - component: {fileID: 4458749769794497432}
+  - component: {fileID: 8536660370954880620}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -107,26 +107,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &750269992214747157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7536839919044836721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29d6f1cd80678a46bceb345ee751749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 509257610518517846}
-  enemyMovement: {fileID: 4458749769794497432}
-  player: {fileID: 0}
-  time: 0
-  mqxCycleTime: 10
-  minCycleTime: 2
-  attackRange: 2
-  comboKickJumpState: 0
 --- !u!114 &4458749769794497432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +120,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 5
+  goToPlayer: 0
+  rb: {fileID: 0}
+  JumpAttackMovementSpeed: 3
+  JumpAttackJumpForce: 9
+--- !u!114 &8536660370954880620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536839919044836721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0431274e931dafa4c954944a106df7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToAttack: 0
+  animator: {fileID: 0}
+  enemyMovement: {fileID: 0}
+  isComboKickJump: 0
 --- !u!1001 &751609459877972701
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public Camera playerCamera;
 
     public bool canMoove = true;
-    public int canMooveCooldown = 0;
+    public float canMooveCooldown = 0;
 
 
     // Start is called before the first frame update
@@ -53,14 +53,6 @@ public class PlayerMovement : MonoBehaviour
     {   
         if (isDashing || !canMoove)
         {
-            if (canMooveCooldown > 0)
-            {
-                canMooveCooldown--;
-            }
-            else
-            {
-                canMoove = true;
-            }
             return;
         }
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
@@ -74,6 +66,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing || !canMoove)
         {
+            if (canMooveCooldown > 0)
+            {
+                canMooveCooldown -= Time.deltaTime;
+            }
+            else
+            {
+                canMoove = true;
+            }
             return;
         }
         Move();
