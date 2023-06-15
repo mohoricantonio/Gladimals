@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private string animate;
     private bool isMoving;
 
+    private bool weaponDrawn;
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,11 +52,25 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
+        weaponDrawn = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (weaponDrawn)
+            {
+                weaponDrawn = false;
+                anim.SetBool("Weapon drawn", false);
+            }
+            else
+            {
+                weaponDrawn = true;
+                anim.SetBool("Weapon drawn", true);
+            }
+        }
         if (isDashing)
         {
             return;
@@ -81,7 +97,14 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         if (horizontalInput == 0 && verticalInput == 0)
+        {
             isMoving = false;
+            if (weaponDrawn)
+            {
+                anim.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
+            }
+        }
+            
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
@@ -147,10 +170,10 @@ public class PlayerMovement : MonoBehaviour
                 switch (animate)
                 {
                     case "RunBack":
-                        anim.SetBool("RunBack", true);
-                        anim.SetBool("RunRight", false);
-                        anim.SetBool("RunLeft", false);
-                        anim.SetBool("RunFD", false);
+                            anim.SetBool("RunBack", true);
+                            anim.SetBool("RunRight", false);
+                            anim.SetBool("RunLeft", false);
+                            anim.SetBool("RunFD", false);
                         break;
                     case "RunRight":
                         anim.SetBool("RunBack", false);
@@ -165,10 +188,10 @@ public class PlayerMovement : MonoBehaviour
                         anim.SetBool("RunFD", false);
                         break;
                     case "RunFD":
-                        anim.SetBool("RunBack", false);
-                        anim.SetBool("RunRight", false);
-                        anim.SetBool("RunLeft", false);
-                        anim.SetBool("RunFD", true);
+                            anim.SetBool("RunBack", false);
+                            anim.SetBool("RunRight", false);
+                            anim.SetBool("RunLeft", false);
+                            anim.SetBool("RunFD", true);
                         break;
                     default:
                         break;

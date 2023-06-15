@@ -14,13 +14,17 @@ public class PlayerCombat : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             DrawWeapon();
+        }
+
+        if (weaponDrawn)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Attack();
+            }
         }
     }
     private void Attack()
@@ -30,9 +34,15 @@ public class PlayerCombat : MonoBehaviour
     }
     private void DrawWeapon()
     {
-        Debug.Log("Draw weapon");
         if (!weaponDrawn)
+        {
             anim.SetTrigger("Draw weapon");
-        else anim.ResetTrigger("Draw weapon");
+            weaponDrawn = true;
+        }
+        else
+        {
+            anim.SetTrigger("Sheet weapon");
+            weaponDrawn = false;
+        }
     }
 }
