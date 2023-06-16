@@ -12,16 +12,20 @@ public class EnemyMovement : MonoBehaviour
     public bool strafeLeft = false;
     public Animator animator;
     public bool isAttacking = false;
+    public EnemyAttack enemyAttack;
+    public int minDistanceToPlayer = 5;
+    public int maxDistanceToPlayer = 10;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        enemyAttack = GetComponent<EnemyAttack>();
     }
 
     private void Update() {
         checkGoToPlayer();
         FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
-        CheckIsAttacking();
+        CkeckDistanceToPlayer();
     }
 
     private void FixedUpdate() {
@@ -36,8 +40,8 @@ public class EnemyMovement : MonoBehaviour
         // Rotate towards the player
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
 
-        // Smoothly rotate towards the player
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        // Rotate the enemy
+        transform.rotation = lookRotation;
     }
 
     public void Jump(){
@@ -85,23 +89,65 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void CheckIsAttacking(){
-        if (isAttacking){
-            animator.SetBool("StrafeLeft", false);
-            animator.SetBool("StrafeRight", false);
+    public void StopAttacking()
+    {
+        isAttacking = false;
+        LaunchStrafe();
+    }
+
+    private void LaunchStrafe()
+    {
+        StopMoovingAnimations();
+        if (strafeLeft)
+        {
+            animator.SetBool("StrafeLeft", true);
+        }
+        else if (strafeRight)
+        {
+            animator.SetBool("StrafeRight", true);
+        }
+        else
+        {
+            animator.SetBool("StrafeLeft", true);
         }
     }
 
-    public void StopAttacking(){
-        isAttacking = false;
-        if (strafeLeft){
-            animator.SetBool("StrafeLeft", true);
+    public void Run(){
+        StopMoovingAnimations();
+        animator.SetBool("isRunning", true);
+    }
+
+    public void RunBackwards(){
+        StopMoovingAnimations();
+        animator.SetBool("isRunningBackward", true);
+    }
+
+    public void StopMoovingAnimations(){
+        animator.SetBool("StrafeLeft", false);
+        animator.SetBool("StrafeRight", false);
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isRunningBackward", false);
+    }
+
+    private void CkeckDistanceToPlayer()
+    {
+        if (isAttacking)
+        {
+            return;
         }
-        else if (strafeRight){
-            animator.SetBool("StrafeRight", true);
+        float distanceToPlayer = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+        if (distanceToPlayer < minDistanceToPlayer)
+        {
+            RunBackwards();
         }
-        else{
-            animator.SetBool("StrafeLeft", true);
+        else if (distanceToPlayer > maxDistanceToPlayer)
+        {
+            Run();
         }
+        else
+        {
+            LaunchStrafe();
+        }
+        
     }
 }
