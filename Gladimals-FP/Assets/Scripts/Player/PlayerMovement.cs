@@ -69,8 +69,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 weaponDrawn = true;
                 anim.SetBool("Weapon drawn", true);
-
-                Debug.Log(anim.GetBool("Weapon drawn"));
             }
         }
         if (isDashing)
