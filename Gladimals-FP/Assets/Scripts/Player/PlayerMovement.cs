@@ -38,6 +38,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool weaponDrawn;
 
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
+    public AudioClip stepSound;
+    private AudioSource audioSource;
+
+    private bool isPlayingStepSound;
+    private float stepSoundDelay = 0.3f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
         weaponDrawn = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -166,10 +175,10 @@ public class PlayerMovement : MonoBehaviour
                 switch (animate)
                 {
                     case "RunBack":
-                            anim.SetBool("RunBack", true);
-                            anim.SetBool("RunRight", false);
-                            anim.SetBool("RunLeft", false);
-                            anim.SetBool("RunFD", false);
+                        anim.SetBool("RunBack", true);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", false);
                         break;
                     case "RunRight":
                         anim.SetBool("RunBack", false);
@@ -184,13 +193,18 @@ public class PlayerMovement : MonoBehaviour
                         anim.SetBool("RunFD", false);
                         break;
                     case "RunFD":
-                            anim.SetBool("RunBack", false);
-                            anim.SetBool("RunRight", false);
-                            anim.SetBool("RunLeft", false);
-                            anim.SetBool("RunFD", true);
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", true);
                         break;
                     default:
                         break;
+                }
+
+                if (!isPlayingStepSound && (anim.GetBool("RunBack") || anim.GetBool("RunRight") || anim.GetBool("RunLeft") || anim.GetBool("RunFD")))
+                {
+                    StartCoroutine(PlayStepSoundWithDelay());
                 }
             }
         }
@@ -221,10 +235,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayJumpSound()
+    {
+        yield return new WaitForSeconds(0.3f);
+        audioSource.PlayOneShot(jumpSound);
+    }
+
     private void Jump()
     {
         ResetAnimations();
         anim.SetTrigger("Jump");
+        StartCoroutine(PlayJumpSound());
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
@@ -240,6 +261,7 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = false;
         moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         rb.AddForce(moveDirection * dashingPower * movementSpeed);
+        audioSource.PlayOneShot(dashSound);
         trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         rb.useGravity = true;
@@ -247,5 +269,13 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
+
+    private IEnumerator PlayStepSoundWithDelay()
+    {
+        isPlayingStepSound = true;
+        audioSource.PlayOneShot(stepSound);
+        yield return new WaitForSeconds(stepSoundDelay);
+        isPlayingStepSound = false;
     }
 }

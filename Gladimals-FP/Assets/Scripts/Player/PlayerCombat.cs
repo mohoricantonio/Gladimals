@@ -5,9 +5,12 @@ public class PlayerCombat : MonoBehaviour
 {
     private Animator anim;
     private bool weaponDrawn;
+    public AudioClip drawWeaponSound;
+    private AudioSource audioSource;
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
         weaponDrawn = false;
     }
     private void Update()
@@ -30,11 +33,18 @@ public class PlayerCombat : MonoBehaviour
         Debug.Log("Attack");
         anim.SetTrigger("Attack");
     }
+
+    private IEnumerator PlayDrawWeaponSound()
+    {
+        yield return new WaitForSeconds(0.5f);
+        audioSource.PlayOneShot(drawWeaponSound);
+    }
     private void DrawWeapon()
     {
         if (!weaponDrawn)
         {
             anim.SetTrigger("Draw weapon");
+            StartCoroutine(PlayDrawWeaponSound());
             weaponDrawn = true;
         }
         else
