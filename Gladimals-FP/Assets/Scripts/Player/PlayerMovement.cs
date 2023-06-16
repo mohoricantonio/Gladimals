@@ -69,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 weaponDrawn = true;
                 anim.SetBool("Weapon drawn", true);
+
+                Debug.Log(anim.GetBool("Weapon drawn"));
             }
         }
         if (isDashing)
@@ -99,10 +101,6 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalInput == 0 && verticalInput == 0)
         {
             isMoving = false;
-            if (weaponDrawn)
-            {
-                anim.SetFloat("Blend", 0, 0.1f, Time.deltaTime);
-            }
         }
             
 
