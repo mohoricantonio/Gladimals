@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Camera playerCamera;
 
-<<<<<<< HEAD:Gladimals-FP/Assets/Scripts/Player/PlayerMovement.cs
     private Animator anim;
     private string animate;
     private bool isMoving;
@@ -46,10 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isPlayingStepSound;
     private float stepSoundDelay = 0.3f;
-=======
     public bool canMoove = true;
     public float canMooveCooldown = 0;
->>>>>>> f791972b5dc47ee2228cf71e1855d56925cbe52e:Gladimals-FP/Assets/Scripts/PlayerMovement.cs
 
 
     // Start is called before the first frame update
@@ -71,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-<<<<<<< HEAD:Gladimals-FP/Assets/Scripts/Player/PlayerMovement.cs
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -86,14 +82,12 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("Weapon drawn", true);
             }
         }
-        if (isDashing)
-=======
-    {   
+        
         if (isDashing || !canMoove)
->>>>>>> f791972b5dc47ee2228cf71e1855d56925cbe52e:Gladimals-FP/Assets/Scripts/PlayerMovement.cs
         {
             return;
         }
+        
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
         if (isGrounded) isDoubleJumping = false;
         GetInput();
@@ -289,18 +283,16 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-<<<<<<< HEAD:Gladimals-FP/Assets/Scripts/Player/PlayerMovement.cs
     private IEnumerator PlayStepSoundWithDelay()
     {
         isPlayingStepSound = true;
         audioSource.PlayOneShot(stepSound);
         yield return new WaitForSeconds(stepSoundDelay);
         isPlayingStepSound = false;
-=======
+    }
     public void cantMoove(int time)
     {
         canMoove = false;
         canMooveCooldown = time;
->>>>>>> f791972b5dc47ee2228cf71e1855d56925cbe52e:Gladimals-FP/Assets/Scripts/PlayerMovement.cs
     }
 }
