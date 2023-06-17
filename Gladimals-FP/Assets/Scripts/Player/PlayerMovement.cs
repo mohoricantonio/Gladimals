@@ -32,33 +32,72 @@ public class PlayerMovement : MonoBehaviour
 
     public Camera playerCamera;
 
+<<<<<<< HEAD:Gladimals-FP/Assets/Scripts/Player/PlayerMovement.cs
+    private Animator anim;
+    private string animate;
+    private bool isMoving;
+
+    private bool weaponDrawn;
+
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
+    public AudioClip stepSound;
+    private AudioSource audioSource;
+
+    private bool isPlayingStepSound;
+    private float stepSoundDelay = 0.3f;
+=======
     public bool canMoove = true;
     public float canMooveCooldown = 0;
+>>>>>>> f791972b5dc47ee2228cf71e1855d56925cbe52e:Gladimals-FP/Assets/Scripts/PlayerMovement.cs
 
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
+        isMoving = false;
+        animate = "";
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        readyToJump= true;
+        readyToJump = true;
         rb.drag = drag;
         canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
+        weaponDrawn = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
+<<<<<<< HEAD:Gladimals-FP/Assets/Scripts/Player/PlayerMovement.cs
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (weaponDrawn)
+            {
+                weaponDrawn = false;
+                anim.SetBool("Weapon drawn", false);
+            }
+            else
+            {
+                weaponDrawn = true;
+                anim.SetBool("Weapon drawn", true);
+            }
+        }
+        if (isDashing)
+=======
     {   
         if (isDashing || !canMoove)
+>>>>>>> f791972b5dc47ee2228cf71e1855d56925cbe52e:Gladimals-FP/Assets/Scripts/PlayerMovement.cs
         {
             return;
         }
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
         if (isGrounded) isDoubleJumping = false;
         GetInput();
-        
+
         ControlSpeed();
     }
 
@@ -84,6 +123,12 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        if (horizontalInput == 0 && verticalInput == 0)
+        {
+            isMoving = false;
+        }
+            
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && readyToJump)
         {
             readyToJump = false;
@@ -99,22 +144,35 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+
     }
     private void Move()
     {
-        moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
-        if (verticalInput == -1){
-            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 180, 0) * new Vector3(horizontalInput, 0, verticalInput);
-        }else if (verticalInput == 0 && horizontalInput == 1)
+
+        if (isMoving == false || isGrounded == false)
         {
-            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y -90, 0) * new Vector3(horizontalInput, 0, verticalInput);
+            ResetAnimations();
+        }
+
+        moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        if (verticalInput == -1)
+        {
+            animate = "RunBack";
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 180, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        }
+        else if (verticalInput == 0 && horizontalInput == 1)
+        {
+            animate = "RunRight";
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y - 90, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
         else if (verticalInput == 0 && horizontalInput == -1)
         {
-            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y+90, 0) * new Vector3(horizontalInput, 0, verticalInput);
+            animate = "RunLeft";
+            rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y + 90, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
         else
         {
+            animate = "RunFD";
             rotateDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         }
 
@@ -129,23 +187,83 @@ public class PlayerMovement : MonoBehaviour
             Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+            isMoving = true;
+            if (isGrounded)
+            {
+                switch (animate)
+                {
+                    case "RunBack":
+                        anim.SetBool("RunBack", true);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", false);
+                        break;
+                    case "RunRight":
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", true);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", false);
+                        break;
+                    case "RunLeft":
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", true);
+                        anim.SetBool("RunFD", false);
+                        break;
+                    case "RunFD":
+                        anim.SetBool("RunBack", false);
+                        anim.SetBool("RunRight", false);
+                        anim.SetBool("RunLeft", false);
+                        anim.SetBool("RunFD", true);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (!isPlayingStepSound && (anim.GetBool("RunBack") || anim.GetBool("RunRight") || anim.GetBool("RunLeft") || anim.GetBool("RunFD")))
+                {
+                    StartCoroutine(PlayStepSoundWithDelay());
+                }
+            }
+        }
+        else
+        {
+            isMoving = false;
         }
     }
-    
+
+    private void ResetAnimations()
+    {
+        animate = "";
+        anim.SetBool("RunBack", false);
+        anim.SetBool("RunRight", false);
+        anim.SetBool("RunLeft", false);
+        anim.SetBool("RunFD", false);
+    }
+
     private void ControlSpeed()
     {
         Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        
 
-        if(flatVelocity.magnitude > movementSpeed)
+
+        if (flatVelocity.magnitude > movementSpeed)
         {
             Vector3 limitedVelocity = flatVelocity.normalized * movementSpeed;
             rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
         }
     }
 
+    private IEnumerator PlayJumpSound()
+    {
+        yield return new WaitForSeconds(0.3f);
+        audioSource.PlayOneShot(jumpSound);
+    }
+
     private void Jump()
     {
+        ResetAnimations();
+        anim.SetTrigger("Jump");
+        StartCoroutine(PlayJumpSound());
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
@@ -161,6 +279,7 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = false;
         moveDirection = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         rb.AddForce(moveDirection * dashingPower * movementSpeed);
+        audioSource.PlayOneShot(dashSound);
         trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         rb.useGravity = true;
@@ -170,9 +289,18 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
+<<<<<<< HEAD:Gladimals-FP/Assets/Scripts/Player/PlayerMovement.cs
+    private IEnumerator PlayStepSoundWithDelay()
+    {
+        isPlayingStepSound = true;
+        audioSource.PlayOneShot(stepSound);
+        yield return new WaitForSeconds(stepSoundDelay);
+        isPlayingStepSound = false;
+=======
     public void cantMoove(int time)
     {
         canMoove = false;
         canMooveCooldown = time;
+>>>>>>> f791972b5dc47ee2228cf71e1855d56925cbe52e:Gladimals-FP/Assets/Scripts/PlayerMovement.cs
     }
 }
