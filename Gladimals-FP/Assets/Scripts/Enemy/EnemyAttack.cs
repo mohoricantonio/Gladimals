@@ -15,6 +15,8 @@ public class EnemyAttack : MonoBehaviour
     public int stunTime = 2;
     public bool isAttacking = false;
     public int attackProba = 0;
+    public float lastAttackCooldown = 0;
+    public float lastAttackCooldownMax = 3;
 
     private void Start() {
         enemyMovement = GetComponent<EnemyMovement>();
@@ -26,6 +28,8 @@ public class EnemyAttack : MonoBehaviour
         if (timeToAttack > 0)
         {
             timeToAttack -= Time.deltaTime;
+            lastAttackCooldown -= Time.deltaTime;
+            CheckIfPlayerIsClose();
         }
         if (timeToAttack <= 0)
         {
@@ -33,6 +37,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         CheckIfAnimationIsFinished();
+
     }
 
     public bool PlayerIsClose()
@@ -85,6 +90,7 @@ public class EnemyAttack : MonoBehaviour
             animator.SetBool("slashAttack", false);
             enemyMovement.StopAttacking();
             isAttacking = false;
+            lastAttackCooldown = lastAttackCooldownMax;
         }
 
         else if(stateInfo.IsName("KickAttack") && stateInfo.normalizedTime >= 1.0f){
@@ -98,6 +104,7 @@ public class EnemyAttack : MonoBehaviour
                 Debug.Log("KickAttack end");
                 enemyMovement.StopAttacking();
                 isAttacking = false;
+                lastAttackCooldown = lastAttackCooldownMax;
             }
         }
 
@@ -106,6 +113,7 @@ public class EnemyAttack : MonoBehaviour
             enemyMovement.StopAttacking();
             isAttacking = false;
             isComboKickJump = false;
+            lastAttackCooldown = lastAttackCooldownMax;
         }
     }
 
@@ -114,6 +122,17 @@ public class EnemyAttack : MonoBehaviour
         {
             player.GetComponent<Rigidbody>().AddForce(transform.forward * kickBackForce + Vector3.up * kickUpForce);
             player.GetComponent<PlayerMovement>().cantMoove(stunTime);
+        }
+    }
+
+    public void CheckIfPlayerIsClose(){
+        if (PlayerIsClose() && !isAttacking && lastAttackCooldown <=0)
+        {
+            enemyMovement.StopMoovingAnimations();
+            animator.SetBool("kickAttack", true);
+            isComboKickJump = true;
+            isAttacking = true;
+            enemyMovement.isAttacking = true;
         }
     }
 }
