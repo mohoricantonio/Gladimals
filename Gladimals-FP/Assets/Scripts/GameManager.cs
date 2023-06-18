@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
+    // ------BEGIN------
+    // Initial Menu scene variables and functions
+
+    [Header("Menu Variables")]
     public GameObject aboutUI;
     public GameObject menuUI;
     public GameObject mainMenu;
@@ -14,7 +18,7 @@ public class GameManager : MonoBehaviour
     public void Play()
     {
         mainMenu.SetActive(false);
-        SceneManager.LoadScene("enemy scene");
+        SceneManager.LoadScene("HealthBar");
     }
 
     public void AboutMenu()
@@ -28,4 +32,27 @@ public class GameManager : MonoBehaviour
         aboutUI.SetActive(false);
         menuUI.SetActive(true);
     }
+    // ------END------
+
+    // ------BEGIN------
+    // Game Scene variables and functions
+
+    [Header("Game Variables")]
+    
+    bool endGame = false;
+
+    bool CheckEndGame()
+    {
+        PlayerHealth playerHP = GameObject.Find("Player").GetComponent<PlayerHealth>();
+        if(playerHP.currentHealth <= 0) return true;
+        else return false;
+    }
+
+    void FixedUpdate()
+    {
+        endGame = CheckEndGame();
+
+        if(endGame) Time.timeScale = 0f;
+    }
+    // ------END------
 }
