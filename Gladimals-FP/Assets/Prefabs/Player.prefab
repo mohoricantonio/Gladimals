@@ -120,6 +120,11 @@ MonoBehaviour:
   dashingTime: 0.2
   dashingCooldown: 2
   playerCamera: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: 2b7d844e7713e2748b56b6b7c0b15d7b, type: 3}
+  dashSound: {fileID: 8300000, guid: e90fac23e09bbe34c805275945ee45dc, type: 3}
+  stepSound: {fileID: 8300000, guid: 5249b438e032b9544a00b9db822b3cdb, type: 3}
+  canMoove: 1
+  canMooveCooldown: 0
 --- !u!96 &2349873346296597459
 TrailRenderer:
   serializedVersion: 3
@@ -245,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757d5153dba916043bfea3c3c22cabac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawWeaponSound: {fileID: 8300000, guid: 3d5df117ab29c2c489817d96f1c2eb33, type: 3}
 --- !u!1 &2529471600086491807
 GameObject:
   m_ObjectHideFlags: 0
