@@ -150,4 +150,11 @@ public class EnemyMovement : MonoBehaviour
         }
         
     }
+
+    internal void StopAttackingAnimations()
+    {
+        animator.SetBool("slashAttack", false);
+        animator.SetBool("kickAttack", false);
+        animator.SetBool("JumpAttack", false);
+    }
 }

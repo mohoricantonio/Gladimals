@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
             player.GetComponent<PlayerCombat>().enabled = false;
             player.GetComponent<PlayerMovement>().enabled = false;
             enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
+            enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
             enemy.GetComponent<EnemyMovement>().enabled = false;
             enemy.GetComponent<EnemyAttack>().enabled = false;
         }
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
         if(endGame) 
         {
             Cursor.visible = true;
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
         }
     }
     // ------END------
