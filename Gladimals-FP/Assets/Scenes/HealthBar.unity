@@ -409,6 +409,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1344446486813465771, guid: 5c5305808edbec149880a2da113ce637, type: 3}
+      propertyPath: m_Name
+      value: gladiatorSword
+      objectReference: {fileID: 0}
     - target: {fileID: 4458749769794497432, guid: 5c5305808edbec149880a2da113ce637, type: 3}
       propertyPath: maxDistanceToPlayer
       value: 30
