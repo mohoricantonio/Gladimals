@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -411,15 +411,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4458749769794497432, guid: 5c5305808edbec149880a2da113ce637, type: 3}
       propertyPath: maxDistanceToPlayer
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4458749769794497432, guid: 5c5305808edbec149880a2da113ce637, type: 3}
       propertyPath: minDistanceToPlayer
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7536839919044836721, guid: 5c5305808edbec149880a2da113ce637, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536660370954880620, guid: 5c5305808edbec149880a2da113ce637, type: 3}
+      propertyPath: attackRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536660370954880620, guid: 5c5305808edbec149880a2da113ce637, type: 3}
+      propertyPath: kickUpForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536660370954880620, guid: 5c5305808edbec149880a2da113ce637, type: 3}
+      propertyPath: kickBackForce
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 8954481093511798894, guid: 5c5305808edbec149880a2da113ce637, type: 3}
       propertyPath: m_RootOrder
@@ -589,8 +601,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 3
   target: {fileID: 1683748527}
-  distanceFromTarget: 10
-  smoothTime: 0.2
+  distanceFromTarget: 15
+  smoothTime: 0.03
   rotationXMinMax: {x: -40, y: 40}
   minXrotation: -4
   maxXrotation: 25
@@ -844,7 +856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: -223}
+  m_AnchoredPosition: {x: -1, y: -485}
   m_SizeDelta: {x: 603.0331, y: 43.2708}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1558350693
@@ -1083,6 +1095,10 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 3570315474743038258, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: movementSpeed
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 667707073900181693, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
