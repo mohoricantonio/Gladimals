@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     private Animator anim;
-    private bool weaponDrawn;
     public AudioClip drawWeaponSound;
     private AudioSource audioSource;
     private float longPressDuration = 1f;
@@ -13,7 +12,6 @@ public class PlayerCombat : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
-        weaponDrawn = false;
         anim.SetBool("FirstAttack", false);
     }
     private void Update()
@@ -23,7 +21,7 @@ public class PlayerCombat : MonoBehaviour
             DrawWeapon();
         }
 
-        if (weaponDrawn)
+        if (anim.GetBool("Weapon drawn"))
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -54,16 +52,14 @@ public class PlayerCombat : MonoBehaviour
     }
     private void DrawWeapon()
     {
-        if (!weaponDrawn)
+        if (!anim.GetBool("Weapon drawn"))
         {
             anim.SetTrigger("Draw weapon");
             StartCoroutine(PlayDrawWeaponSound());
-            weaponDrawn = true;
         }
         else
         {
             anim.SetTrigger("Sheet weapon");
-            weaponDrawn = false;
         }
     }
     private void LongPressAttack()

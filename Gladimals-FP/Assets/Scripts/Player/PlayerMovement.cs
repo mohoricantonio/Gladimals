@@ -62,29 +62,15 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
-        weaponDrawn = false;
         audioSource = GetComponent<AudioSource>();
 
         anim.SetBool("CanMove", true);
+        anim.SetBool("Weapon drawn", false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (weaponDrawn)
-            {
-                weaponDrawn = false;
-                anim.SetBool("Weapon drawn", false);
-            }
-            else
-            {
-                weaponDrawn = true;
-                anim.SetBool("Weapon drawn", true);
-            }
-        }
-        
         if (isDashing || !canMoove)
         {
             return;
@@ -178,6 +164,8 @@ public class PlayerMovement : MonoBehaviour
         if (anim.GetBool("CanMove"))
         {
             rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
+
+            Debug.Log(rb.GetAccumulatedForce());
 
             if (movementDirection != Vector3.zero)
             {

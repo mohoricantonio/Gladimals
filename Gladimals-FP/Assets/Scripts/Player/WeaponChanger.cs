@@ -28,6 +28,14 @@ public class WeaponChanger : MonoBehaviour
         Destroy(weaponInHand);
         weaponInSheet = Instantiate(weapon, sheetWeapon.transform);
     }
+    public void ResetWeaponDrawn()
+    {
+        anim.SetBool("Weapon drawn", false);
+    }
+    public void SetWeaponDrawn()
+    {
+        anim.SetBool("Weapon drawn", true);
+    }
     public void ResetFirstAttack()
     {
         anim.SetBool("FirstAttack", false);
