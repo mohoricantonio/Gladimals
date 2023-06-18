@@ -13,13 +13,6 @@ public class GameManager : MonoBehaviour
     public GameObject aboutUI;
     public GameObject menuUI;
     public GameObject mainMenu;
-    public GameObject player;
-    public GameObject enemy;
-
-    private void Start() {
-        player = GameObject.Find("Player");
-        enemy = GameObject.Find("Enemy");
-    }
 
     // Loads the game scene
     public void PlayMenu()
@@ -43,15 +36,23 @@ public class GameManager : MonoBehaviour
     }
     // ------END------
 
+    // --------------------
+
     // ------BEGIN------
     // Game Scene variables and functions
     [Header("Game Variables")]
-
+    public GameObject player;
+    public GameObject enemy;
     public GameObject gameOverUI;
     public GameObject healthBarUI;
 
     // Private Vriables
-    bool endGame = false;
+    private bool endGame = false;
+
+    private void Start() {
+        player = GameObject.Find("Player");
+        enemy = GameObject.Find("Enemy");
+    }
 
     // Reloads the scene to play again
     public void PlayAgain()
@@ -77,6 +78,9 @@ public class GameManager : MonoBehaviour
             enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
             enemy.GetComponent<EnemyMovement>().enabled = false;
             enemy.GetComponent<EnemyAttack>().enabled = false;
+
+            healthBarUI.SetActive(false);
+            gameOverUI.SetActive(true);
         }
     }
 
