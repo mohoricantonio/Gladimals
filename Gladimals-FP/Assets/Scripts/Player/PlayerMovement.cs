@@ -64,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         isDoubleJumping = false;
         weaponDrawn = false;
         audioSource = GetComponent<AudioSource>();
+
+        anim.SetBool("CanMove", true);
     }
 
     // Update is called once per frame
@@ -173,57 +175,60 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementDirection = moveDirection.normalized;
         Vector3 rotationDirection = rotateDirection.normalized;
 
-
-        rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
-
-        if (movementDirection != Vector3.zero)
+        if (anim.GetBool("CanMove"))
         {
-            Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+            rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
-            isMoving = true;
-            if (isGrounded)
+            if (movementDirection != Vector3.zero)
             {
-                switch (animate)
-                {
-                    case "RunBack":
-                        anim.SetBool("RunBack", true);
-                        anim.SetBool("RunRight", false);
-                        anim.SetBool("RunLeft", false);
-                        anim.SetBool("RunFD", false);
-                        break;
-                    case "RunRight":
-                        anim.SetBool("RunBack", false);
-                        anim.SetBool("RunRight", true);
-                        anim.SetBool("RunLeft", false);
-                        anim.SetBool("RunFD", false);
-                        break;
-                    case "RunLeft":
-                        anim.SetBool("RunBack", false);
-                        anim.SetBool("RunRight", false);
-                        anim.SetBool("RunLeft", true);
-                        anim.SetBool("RunFD", false);
-                        break;
-                    case "RunFD":
-                        anim.SetBool("RunBack", false);
-                        anim.SetBool("RunRight", false);
-                        anim.SetBool("RunLeft", false);
-                        anim.SetBool("RunFD", true);
-                        break;
-                    default:
-                        break;
-                }
+                Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
 
-                if (!isPlayingStepSound && (anim.GetBool("RunBack") || anim.GetBool("RunRight") || anim.GetBool("RunLeft") || anim.GetBool("RunFD")))
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+                isMoving = true;
+                if (isGrounded)
                 {
-                    StartCoroutine(PlayStepSoundWithDelay());
+                    switch (animate)
+                    {
+                        case "RunBack":
+                            anim.SetBool("RunBack", true);
+                            anim.SetBool("RunRight", false);
+                            anim.SetBool("RunLeft", false);
+                            anim.SetBool("RunFD", false);
+                            break;
+                        case "RunRight":
+                            anim.SetBool("RunBack", false);
+                            anim.SetBool("RunRight", true);
+                            anim.SetBool("RunLeft", false);
+                            anim.SetBool("RunFD", false);
+                            break;
+                        case "RunLeft":
+                            anim.SetBool("RunBack", false);
+                            anim.SetBool("RunRight", false);
+                            anim.SetBool("RunLeft", true);
+                            anim.SetBool("RunFD", false);
+                            break;
+                        case "RunFD":
+                            anim.SetBool("RunBack", false);
+                            anim.SetBool("RunRight", false);
+                            anim.SetBool("RunLeft", false);
+                            anim.SetBool("RunFD", true);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (!isPlayingStepSound && (anim.GetBool("RunBack") || anim.GetBool("RunRight") || anim.GetBool("RunLeft") || anim.GetBool("RunFD")))
+                    {
+                        StartCoroutine(PlayStepSoundWithDelay());
+                    }
                 }
             }
+            else
+            {
+                isMoving = false;
+            }
         }
-        else
-        {
-            isMoving = false;
-        }
+        
     }
 
     private void ResetAnimations()

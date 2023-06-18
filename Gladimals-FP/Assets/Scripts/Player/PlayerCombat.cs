@@ -7,11 +7,14 @@ public class PlayerCombat : MonoBehaviour
     private bool weaponDrawn;
     public AudioClip drawWeaponSound;
     private AudioSource audioSource;
+    private float longPressDuration = 1f;
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
         weaponDrawn = false;
+        anim.SetBool("FirstAttack", false);
     }
     private void Update()
     {
@@ -24,13 +27,21 @@ public class PlayerCombat : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Attack();
+                Invoke("LongPressAttack", longPressDuration);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                CancelInvoke("LongPressAttack");
+                if(anim.GetBool("PowerSlash") == false)
+                {
+                    Attack();
+                }
+                
             }
         }
     }
     private void Attack()
     {
-        Debug.Log("Attack");
         anim.SetTrigger("Attack");
     }
 
@@ -53,12 +64,16 @@ public class PlayerCombat : MonoBehaviour
             weaponDrawn = false;
         }
     }
+    private void LongPressAttack()
+    {
+        anim.SetTrigger("PowerAttack");
+    }
 
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Weapon")
         {
-            Debug.Log("Enemy hit");
+            //Debug.Log("Enemy hit");
             GetComponent<PlayerHealth>().swordCollision = true;
         }
     }

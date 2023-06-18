@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2041705725226589241}
   - component: {fileID: 3570315474743038258}
   - component: {fileID: 2349873346296597459}
-  - component: {fileID: 3506767744259486910}
+  - component: {fileID: 7581238475541589630}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -238,7 +238,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &3506767744259486910
+--- !u!114 &7581238475541589630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
