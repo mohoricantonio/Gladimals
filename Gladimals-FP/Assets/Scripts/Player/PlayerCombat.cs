@@ -27,6 +27,8 @@ public class PlayerCombat : MonoBehaviour
                 Attack();
             }
         }
+
+        //CheckDeath();
     }
     private void Attack()
     {
@@ -67,6 +69,12 @@ public class PlayerCombat : MonoBehaviour
         if (other.gameObject.tag == "Weapon")
         {
             GetComponent<PlayerHealth>().swordCollision = false;
+        }
+    }
+
+    private void CheckDeath(){
+        if(GetComponent<PlayerHealth>().isDead()){
+            anim.SetTrigger("Death");
         }
     }
 }

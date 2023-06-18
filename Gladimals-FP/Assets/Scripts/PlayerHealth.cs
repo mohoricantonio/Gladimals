@@ -21,4 +21,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         healthBar.setHealth(currentHealth);
     }
+
+    public bool isDead(){
+        if(currentHealth <= 0) return true;
+        else return false;
+    }
 }

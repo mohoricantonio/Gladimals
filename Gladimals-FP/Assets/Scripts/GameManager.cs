@@ -13,6 +13,13 @@ public class GameManager : MonoBehaviour
     public GameObject aboutUI;
     public GameObject menuUI;
     public GameObject mainMenu;
+    public GameObject player;
+    public GameObject enemy;
+
+    private void Start() {
+        player = GameObject.Find("Player");
+        enemy = GameObject.Find("Enemy");
+    }
 
 
     public void Play()
@@ -36,23 +43,27 @@ public class GameManager : MonoBehaviour
 
     // ------BEGIN------
     // Game Scene variables and functions
-
     [Header("Game Variables")]
+    bool endgame = false;
     
-    bool endGame = false;
 
-    bool CheckEndGame()
+    void CheckEndGame()
     {
-        PlayerHealth playerHP = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        if(playerHP.currentHealth <= 0) return true;
-        else return false;
+        if (player.GetComponent<PlayerHealth>().isDead() && !endgame){
+            endgame = true;
+            player.GetComponentInChildren<Animator>().SetTrigger("Death");
+            player.GetComponent<PlayerCombat>().enabled = false;
+            player.GetComponent<PlayerMovement>().enabled = false;
+            enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
+            enemy.GetComponent<EnemyMovement>().enabled = false;
+            enemy.GetComponent<EnemyAttack>().enabled = false;
+        }
+        
     }
 
     void FixedUpdate()
     {
-        endGame = CheckEndGame();
-
-        if(endGame) Time.timeScale = 0f;
+        CheckEndGame();
     }
     // ------END------
 }

@@ -53,7 +53,6 @@ public class EnemyAttack : MonoBehaviour
     public void Attack(){
         if (!isAttacking){
             attackProba = Random.Range(0, 100);
-            Debug.Log(attackProba);
             isAttacking = true;
         }
         
@@ -61,7 +60,6 @@ public class EnemyAttack : MonoBehaviour
         {
             enemyMovement.isAttacking = true;
             enemyMovement.Run();
-            Debug.Log("Player too far away");
         }
         else{
             timeToAttack = Random.Range(5, 10);
@@ -96,12 +94,10 @@ public class EnemyAttack : MonoBehaviour
         else if(stateInfo.IsName("KickAttack") && stateInfo.normalizedTime >= 1.0f){
             animator.SetBool("kickAttack", false);
             if (isComboKickJump){
-                Debug.Log("ComboKickJump start");
                 animator.SetBool("JumpAttack", true);
                 enemyMovement.isAttacking = true;
             }
             else{
-                Debug.Log("KickAttack end");
                 enemyMovement.StopAttacking();
                 isAttacking = false;
                 lastAttackCooldown = lastAttackCooldownMax;
@@ -138,7 +134,6 @@ public class EnemyAttack : MonoBehaviour
     }
 
     public void damageAnimEvent(){
-        Debug.Log("Damage event");
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         if (playerHealth.swordCollision)
         {
