@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3445950034120084187}
   m_Layer: 0
   m_Name: 1HSword
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

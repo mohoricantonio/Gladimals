@@ -53,4 +53,20 @@ public class PlayerCombat : MonoBehaviour
             weaponDrawn = false;
         }
     }
+
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Weapon")
+        {
+            Debug.Log("Enemy hit");
+            GetComponent<PlayerHealth>().swordCollision = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.tag == "Weapon")
+        {
+            GetComponent<PlayerHealth>().swordCollision = false;
+        }
+    }
 }

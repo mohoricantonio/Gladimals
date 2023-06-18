@@ -413,6 +413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: gladiatorSword
       objectReference: {fileID: 0}
+    - target: {fileID: 4372900445674368389, guid: 5c5305808edbec149880a2da113ce637, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4458749769794497432, guid: 5c5305808edbec149880a2da113ce637, type: 3}
       propertyPath: maxDistanceToPlayer
       value: 30
@@ -494,7 +498,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1344446486813465771, guid: 5c5305808edbec149880a2da113ce637, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c5305808edbec149880a2da113ce637, type: 3}
@@ -624,6 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  swordCollision: 0
   healthBar: {fileID: 1558350693}
 --- !u!82 &978985264
 AudioSource:

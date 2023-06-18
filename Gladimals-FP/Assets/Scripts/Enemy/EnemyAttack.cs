@@ -122,6 +122,7 @@ public class EnemyAttack : MonoBehaviour
         {
             player.GetComponent<Rigidbody>().AddForce(transform.forward * kickBackForce + Vector3.up * kickUpForce);
             player.GetComponent<PlayerMovement>().cantMoove(stunTime);
+            player.GetComponent<PlayerHealth>().TakeDamage(10);
         }
     }
 
@@ -133,6 +134,15 @@ public class EnemyAttack : MonoBehaviour
             isComboKickJump = true;
             isAttacking = true;
             enemyMovement.isAttacking = true;
+        }
+    }
+
+    public void damageAnimEvent(){
+        Debug.Log("Damage event");
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth.swordCollision)
+        {
+            playerHealth.TakeDamage(20);
         }
     }
 }
