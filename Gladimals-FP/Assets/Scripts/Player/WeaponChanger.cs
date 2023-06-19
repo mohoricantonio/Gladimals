@@ -77,7 +77,6 @@ public class WeaponChanger : MonoBehaviour
         EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
         if (enemyHealth.swordCollision)
         {
-            Debug.Log(anim.GetBool("PowerSlash"));
                 enemyHealth.TakeDamage(20);
         }
     }
@@ -87,7 +86,6 @@ public class WeaponChanger : MonoBehaviour
         EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
         if (enemyHealth.swordCollision)
         {
-            Debug.Log(anim.GetBool("PowerSlash"));
             enemyHealth.TakeDamage(40);
         }
     }
