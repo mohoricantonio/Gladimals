@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!154 &477065310
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -548,6 +548,18 @@ PrefabInstance:
     - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1583,6 +1595,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   swordCollision: 0
+  deathAnim: 0
 --- !u!1001 &1939608514
 PrefabInstance:
   m_ObjectHideFlags: 0
