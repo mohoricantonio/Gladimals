@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
     // Checks player health status and ends or not the game
     void CheckEndGame()
     {
+        if (SceneManager.GetActiveScene().name == "MainMenu") return;
         if (player.GetComponent<PlayerHealth>().isDead() && !endGame){
             endGame = true;
             player.GetComponentInChildren<Animator>().SetTrigger("Death");
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
             enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
             enemy.GetComponent<EnemyMovement>().enabled = false;
             enemy.GetComponent<EnemyAttack>().enabled = false;
+            GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().enabled = false;
 
             healthBarUI.SetActive(false);
             gameOverUI.SetActive(true);
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
         if(endGame) 
         {
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             //Time.timeScale = 0f;
         }
     }
