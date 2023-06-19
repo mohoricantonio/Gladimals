@@ -161,6 +161,19 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementDirection = moveDirection.normalized;
         Vector3 rotationDirection = rotateDirection.normalized;
 
+
+        try
+        {
+            if (anim.GetCurrentAnimatorClipInfo(1)[0].clip.name == "PowerSlash" ||
+                anim.GetCurrentAnimatorClipInfo(1)[0].clip.name == "Slash3")
+            {
+                Vector3 move = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(0, 0, 1);
+                rb.AddForce(move.normalized * 20f, ForceMode.Force);
+            }
+        }
+        catch (System.Exception)
+        { }
+
         if (anim.GetBool("CanMove"))
         {
             rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
