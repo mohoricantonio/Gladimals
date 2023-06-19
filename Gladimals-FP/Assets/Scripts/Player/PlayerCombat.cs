@@ -7,6 +7,7 @@ public class PlayerCombat : MonoBehaviour
     public AudioClip drawWeaponSound;
     private AudioSource audioSource;
     private float longPressDuration = 1f;
+  
 
     private void Start()
     {
@@ -82,6 +83,7 @@ public class PlayerCombat : MonoBehaviour
             GetComponent<PlayerHealth>().swordCollision = false;
         }
     }
+
 
     private void CheckDeath(){
         if(GetComponent<PlayerHealth>().isDead()){

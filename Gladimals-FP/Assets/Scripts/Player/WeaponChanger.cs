@@ -9,6 +9,7 @@ public class WeaponChanger : MonoBehaviour
     public GameObject sheetWeapon;
     private GameObject weaponInHand;
     private GameObject weaponInSheet;
+    private GameObject enemy;
 
     private Animator anim;
     // Start is called before the first frame update
@@ -16,6 +17,8 @@ public class WeaponChanger : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         weaponInSheet = Instantiate(weapon, sheetWeapon.transform);
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
+
     }
 
     public void WeaponDraw()
@@ -67,5 +70,25 @@ public class WeaponChanger : MonoBehaviour
     public void ResetCanMove()
     {
         anim.SetBool("CanMove", false);
+    }
+
+    public void NormalDamageAnimEvent()
+    {
+        EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+        if (enemyHealth.swordCollision)
+        {
+            Debug.Log(anim.GetBool("PowerSlash"));
+                enemyHealth.TakeDamage(20);
+        }
+    }
+
+    public void HighDamageAnimEvent()
+    {
+        EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+        if (enemyHealth.swordCollision)
+        {
+            Debug.Log(anim.GetBool("PowerSlash"));
+            enemyHealth.TakeDamage(40);
+        }
     }
 }

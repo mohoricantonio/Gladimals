@@ -133,6 +133,23 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Weapon")
+        {
+            //Debug.Log("PLayer hit");
+            GetComponent<EnemyHealth>().swordCollision = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Weapon")
+        {
+            GetComponent<EnemyHealth>().swordCollision = false;
+        }
+    }
+
     public void damageAnimEvent(){
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         if (playerHealth.swordCollision)
