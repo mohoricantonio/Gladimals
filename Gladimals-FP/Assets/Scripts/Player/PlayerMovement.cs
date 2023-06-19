@@ -165,8 +165,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(movementDirection * movementSpeed * 10f, ForceMode.Force);
 
-            Debug.Log(rb.GetAccumulatedForce());
-
             if (movementDirection != Vector3.zero)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
