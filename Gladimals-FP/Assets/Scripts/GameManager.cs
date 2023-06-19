@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            //Time.timeScale = 0f;
         }
     }
     // ------END------
