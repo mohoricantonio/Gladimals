@@ -11,8 +11,8 @@
 /[Uu]ser[Ss]ettings/
 
 # Arena models
-/[Aa]ssets/[Mm]odels/[Aa]renas/
 !/[Aa]ssets/[Mm]odels/[Aa]renas/arena_*.meta
+/[Aa]ssets/[Mm]odels/[Aa]renas/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
