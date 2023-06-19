@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemy;
     public GameObject gameOverUI;
     public GameObject healthBarUI;
+    public GameObject WinnerUI;
 
     // Private Vriables
     private bool endGame = false;
@@ -73,15 +74,10 @@ public class GameManager : MonoBehaviour
         if (player.GetComponent<PlayerHealth>().isDead() && !endGame){
             endGame = true;
             player.GetComponentInChildren<Animator>().SetTrigger("Death");
-            player.GetComponent<PlayerCombat>().enabled = false;
-            player.GetComponent<PlayerMovement>().enabled = false;
-            enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
-            enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
-            enemy.GetComponent<EnemyMovement>().enabled = false;
-            enemy.GetComponent<EnemyAttack>().enabled = false;
-            GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().enabled = false;
 
-            healthBarUI.SetActive(false);
+            StopGameScripts();
+
+            
             gameOverUI.SetActive(true);
         }
     }
@@ -89,12 +85,34 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckEndGame();
-
-        if(endGame) 
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
     }
+
+    public void EnemyDeathScene()
+    {
+        StopGameScripts();
+        WinnerUI.SetActive(true);
+    }
+
+    void StopGameScripts()
+    {
+        player.GetComponent<PlayerCombat>().enabled = false;
+        player.GetComponent<PlayerMovement>().enabled = false;
+        enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
+        enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
+        enemy.GetComponent<EnemyMovement>().enabled = false;
+        enemy.GetComponent<EnemyAttack>().enabled = false;
+        GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().enabled = false;
+
+        healthBarUI.SetActive(false);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void NextEnemy()
+    {
+        SceneManager.LoadScene("FinalFight");
+    }
+
     // ------END------
 }
