@@ -161,6 +161,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementDirection = moveDirection.normalized;
         Vector3 rotationDirection = rotateDirection.normalized;
 
+        if(Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            RotatePlayerToCamera();
+        }
+
 
         try
         {
@@ -298,5 +303,11 @@ public class PlayerMovement : MonoBehaviour
     {
         canMoove = false;
         canMooveCooldown = time;
+    }
+    private void RotatePlayerToCamera()
+    {
+        Vector3 rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(0, 0, 1);
+        Quaternion desiredRotation = Quaternion.LookRotation(rotation.normalized, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * 2 * Time.deltaTime);
     }
 }
