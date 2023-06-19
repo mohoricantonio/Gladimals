@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public bool swordCollision = false;
+    public bool deathAnim = false;
     private GameObject player;
     private WeaponChanger playerScript;
 
@@ -17,12 +18,20 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponentInChildren<WeaponChanger>();
-
     }
 
     private void FixedUpdate()
     {
         CheckIfHited();
+    }
+
+    private void Update() {
+        if(isDead() && !deathAnim){
+            deathAnim = true;
+            GetComponent<Animator>().SetTrigger("Death");
+            GetComponent<EnemyMovement>().enabled = false;
+            GetComponent<EnemyAttack>().enabled = false;
+        }
     }
 
     public void TakeDamage(int damage)

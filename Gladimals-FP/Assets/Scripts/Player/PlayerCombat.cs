@@ -6,8 +6,7 @@ public class PlayerCombat : MonoBehaviour
     private Animator anim;
     public AudioClip drawWeaponSound;
     private AudioSource audioSource;
-    private float longPressDuration = 1f;
-  
+    private float longPressDuration = 0.2f;
 
     private void Start()
     {
