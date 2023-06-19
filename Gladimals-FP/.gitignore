@@ -11,8 +11,11 @@
 /[Uu]ser[Ss]ettings/
 
 # Arena models
-!/[Aa]ssets/[Mm]odels/[Aa]renas/*.meta
-/[Aa]ssets/[Mm]odels/[Aa]renas/
+/[Aa]ssets/[Mm]odels/[Aa]renas/*.blend
+/[Aa]ssets/[Mm]odels/[Aa]renas/*.blend1
+/[Aa]ssets/[Mm]odels/[Aa]renas/*/*.fbx
+/[Aa]ssets/[Mm]odels/[Aa]renas/*.blend.meta
+/[Aa]ssets/[Mm]odels/[Aa]renas/*.blend1.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
