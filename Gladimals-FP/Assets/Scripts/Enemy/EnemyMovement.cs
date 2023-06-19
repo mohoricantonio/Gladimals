@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class EnemyMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         enemyAttack = GetComponent<EnemyAttack>();
+        if (SceneManager.GetActiveScene().name == "FinalFight")
+        {
+            animator.SetTrigger("Start");
+        }
     }
 
     private void Update() {
