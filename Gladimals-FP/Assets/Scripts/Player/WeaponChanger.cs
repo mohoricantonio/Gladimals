@@ -10,14 +10,17 @@ public class WeaponChanger : MonoBehaviour
     private GameObject weaponInHand;
     private GameObject weaponInSheet;
     private GameObject enemy;
-
+    public bool enemyIsHitable;
     private Animator anim;
+
+
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         weaponInSheet = Instantiate(weapon, sheetWeapon.transform);
         enemy = GameObject.FindGameObjectWithTag("Enemy");
+        enemyIsHitable = false;
 
     }
 
@@ -72,21 +75,13 @@ public class WeaponChanger : MonoBehaviour
         anim.SetBool("CanMove", false);
     }
 
-    public void NormalDamageAnimEvent()
+    public void StartDamageStepEvent()
     {
-        EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-        if (enemyHealth.swordCollision)
-        {
-                enemyHealth.TakeDamage(20);
-        }
+        enemyIsHitable = true;
     }
 
-    public void HighDamageAnimEvent()
+    public void EndDamageStepEvent()
     {
-        EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-        if (enemyHealth.swordCollision)
-        {
-            enemyHealth.TakeDamage(40);
-        }
+        enemyIsHitable = false;
     }
 }

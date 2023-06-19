@@ -30,6 +30,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate() {
         StrafeCheckChangeDirection();
+        CheckIfAnimationIsFinished();
     }
 
     public void FocusTarget(Transform target)
@@ -122,7 +123,22 @@ public class EnemyMovement : MonoBehaviour
         animator.SetBool("isRunningBackward", true);
     }
 
-    public void StopMoovingAnimations(){
+    public void Hited()
+    {
+        animator.SetBool("hited", true);
+    }
+
+    public void CheckIfAnimationIsFinished()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Hit") && stateInfo.normalizedTime >= 1.0f)
+        {
+            animator.SetBool("hited", false);
+        }
+    }
+
+        public void StopMoovingAnimations(){
         animator.SetBool("StrafeLeft", false);
         animator.SetBool("StrafeRight", false);
         animator.SetBool("isRunning", false);
@@ -151,7 +167,7 @@ public class EnemyMovement : MonoBehaviour
         
     }
 
-    internal void StopAttackingAnimations()
+       internal void StopAttackingAnimations()
     {
         animator.SetBool("slashAttack", false);
         animator.SetBool("kickAttack", false);
