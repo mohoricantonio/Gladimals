@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!154 &477065310
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -525,6 +525,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 656156479727552870, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1334064780622185865, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -533,15 +537,75 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3196389423245886472, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196389423245886472, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3442271357778685778, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_Convex
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442271357778685778, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518163608441176430, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548296526365788177, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548296526365788177, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548296526365788177, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626315498909120417, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626315498909120417, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281522971162657330, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7551902340422988976, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_Name
       value: ArenaPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7551902340422988976, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551902340422988976, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171439087308799542, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171439087308799542, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171439087308799542, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8246779383510085174, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -567,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 9021892487251444048, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_LocalPosition.z
