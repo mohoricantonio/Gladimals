@@ -36,8 +36,6 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
         }
-
-        //CheckDeath();
     }
     private void Attack()
     {
@@ -49,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         audioSource.PlayOneShot(drawWeaponSound);
     }
-    private void DrawWeapon()
+    public void DrawWeapon()
     {
         if (!anim.GetBool("Weapon drawn"))
         {
@@ -79,13 +77,6 @@ public class PlayerCombat : MonoBehaviour
         if (other.gameObject.tag == "Weapon")
         {
             GetComponent<PlayerHealth>().swordCollision = false;
-        }
-    }
-
-
-    private void CheckDeath(){
-        if(GetComponent<PlayerHealth>().isDead()){
-            anim.SetTrigger("Death");
         }
     }
 }

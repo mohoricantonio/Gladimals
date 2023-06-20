@@ -28,10 +28,7 @@ public class EnemyHealth : MonoBehaviour
     private void Update() {
         if(isDead() && !deathAnim){
             deathAnim = true;
-            GetComponent<Animator>().SetTrigger("Death");
-            GetComponent<EnemyMovement>().enabled = false;
-            GetComponent<EnemyAttack>().enabled = false;
-            GameObject.Find("GameManager").GetComponent<GameManager>().EnemyDeathScene();
+            GameObject.Find("GameManager").GetComponent<GameManager>().PlayerWinScript();
         }
     }
 

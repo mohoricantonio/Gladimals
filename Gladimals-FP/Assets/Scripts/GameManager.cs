@@ -90,7 +90,6 @@ public class GameManager : MonoBehaviour
 
             StopGameScripts();
 
-            
             gameOverUI.SetActive(true);
         }
     }
@@ -100,19 +99,25 @@ public class GameManager : MonoBehaviour
         CheckEndGame();
     }
 
-    public void EnemyDeathScene()
+    public void PlayerWinScript()
     {
         StopGameScripts();
+        enemy.GetComponent<Animator>().SetTrigger("Death");
+        player.GetComponent<PlayerCombat>().DrawWeapon();
         WinnerUI.SetActive(true);
     }
 
     void StopGameScripts()
     {
+        player.GetComponent<PlayerMovement>().ResetAnimations();
         player.GetComponent<PlayerCombat>().enabled = false;
         player.GetComponent<PlayerMovement>().enabled = false;
-        enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
-        enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
-        enemy.GetComponent<EnemyMovement>().enabled = false;
+
+        EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
+        enemyMovement.StopMoovingAnimations();
+        enemyMovement.StopAttackingAnimations();
+        enemyMovement.enabled = false;
+
         enemy.GetComponent<EnemyAttack>().enabled = false;
         GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().enabled = false;
 

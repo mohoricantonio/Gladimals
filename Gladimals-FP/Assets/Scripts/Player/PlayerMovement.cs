@@ -235,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private void ResetAnimations()
+    public void ResetAnimations()
     {
         animate = "";
         anim.SetBool("RunBack", false);
