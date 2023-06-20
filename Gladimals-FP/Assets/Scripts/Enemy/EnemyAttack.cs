@@ -111,6 +111,9 @@ public class EnemyAttack : MonoBehaviour
             isComboKickJump = false;
             lastAttackCooldown = lastAttackCooldownMax;
         }
+
+        animator.SetBool("hited", false);
+
     }
 
     public void KickAnimationEvent(){
@@ -137,7 +140,6 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.gameObject.tag == "Weapon")
         {
-            //Debug.Log("PLayer hit");
             GetComponent<EnemyHealth>().swordCollision = true;
         }
     }
