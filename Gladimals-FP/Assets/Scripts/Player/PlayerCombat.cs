@@ -5,7 +5,6 @@ public class PlayerCombat : MonoBehaviour
 {
     private Animator anim;
     public AudioClip drawWeaponSound;
-    public AudioClip swordSound;
     public AudioClip crowdHeavySound;
     private AudioSource arenaAudioSource;
     private AudioSource audioSource;
@@ -48,7 +47,6 @@ public class PlayerCombat : MonoBehaviour
     private void Attack()
     {
         anim.SetTrigger("Attack");
-        audioSource.PlayOneShot(swordSound);
     }
 
     private IEnumerator PlayDrawWeaponSound()
@@ -72,7 +70,6 @@ public class PlayerCombat : MonoBehaviour
     private IEnumerator LongAttackSound()
     {
         yield return new WaitForSeconds(0.4f);
-        audioSource.PlayOneShot(swordSound);
     }
 
     private void LongPressAttack()

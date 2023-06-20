@@ -60,7 +60,6 @@ public class EnemyHealth : MonoBehaviour
     {
         if (playerScript.enemyIsHitable && swordCollision)
         {
-            playerAudioSource.PlayOneShot(swordHitSound);
             NormalDamaged();
         }
     }
@@ -70,6 +69,7 @@ public class EnemyHealth : MonoBehaviour
         TakeDamage(20);
         playerScript.enemyIsHitable = false;
         GetComponent<EnemyMovement>().Hited();
+        playerAudioSource.PlayOneShot(swordHitSound);
     }
 
     public void HighDamaged()
