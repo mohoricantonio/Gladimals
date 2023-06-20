@@ -44,6 +44,7 @@ public class EnemyHealth : MonoBehaviour
             GetComponent<Animator>().SetTrigger("Death");
             GetComponent<EnemyMovement>().enabled = false;
             GetComponent<EnemyAttack>().enabled = false;
+            GameObject.Find("GameManager").GetComponent<GameManager>().EnemyDeathScene();
         }
     }
 
@@ -72,7 +73,6 @@ public class EnemyHealth : MonoBehaviour
         TakeDamage(20);
         playerScript.enemyIsHitable = false;
         GetComponent<EnemyMovement>().Hited();
- 
     }
 
     public void HighDamaged()

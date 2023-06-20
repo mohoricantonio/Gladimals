@@ -42,7 +42,6 @@ public class PlayerCombat : MonoBehaviour
                 {
                     Attack();
                 }
-                
             }
         }
 

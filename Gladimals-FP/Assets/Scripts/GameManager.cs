@@ -13,12 +13,13 @@ public class GameManager : MonoBehaviour
     public GameObject aboutUI;
     public GameObject menuUI;
     public GameObject mainMenu;
+    public GameObject howToPlayUI;
 
     // Loads the game scene
     public void PlayMenu()
     {
         mainMenu.SetActive(false);
-        SceneManager.LoadScene("HealthBar");
+        SceneManager.LoadScene(0);
     }
 
     // UI Objects Activation / Deactivation
@@ -31,8 +32,20 @@ public class GameManager : MonoBehaviour
     // UI Objects Activation / Deactivation
     public void MainMenu()
     {
+        howToPlayUI.SetActive(false);
         aboutUI.SetActive(false);
         menuUI.SetActive(true);
+    }
+
+    public void HowToPlay()
+    {
+        menuUI.SetActive(false);
+        howToPlayUI.SetActive(true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
     // ------END------
 
@@ -45,6 +58,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemy;
     public GameObject gameOverUI;
     public GameObject healthBarUI;
+    public GameObject WinnerUI;
 
     // Private Vriables
     private bool endGame = false;
@@ -63,7 +77,7 @@ public class GameManager : MonoBehaviour
     // Gets back to main menu
     public void GoMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(1);
     }
 
     // Checks player health status and ends or not the game
@@ -73,15 +87,10 @@ public class GameManager : MonoBehaviour
         if (player.GetComponent<PlayerHealth>().isDead() && !endGame){
             endGame = true;
             player.GetComponentInChildren<Animator>().SetTrigger("Death");
-            player.GetComponent<PlayerCombat>().enabled = false;
-            player.GetComponent<PlayerMovement>().enabled = false;
-            enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
-            enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
-            enemy.GetComponent<EnemyMovement>().enabled = false;
-            enemy.GetComponent<EnemyAttack>().enabled = false;
-            GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().enabled = false;
 
-            healthBarUI.SetActive(false);
+            StopGameScripts();
+
+            
             gameOverUI.SetActive(true);
         }
     }
@@ -89,12 +98,34 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckEndGame();
-
-        if(endGame) 
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
     }
+
+    public void EnemyDeathScene()
+    {
+        StopGameScripts();
+        WinnerUI.SetActive(true);
+    }
+
+    void StopGameScripts()
+    {
+        player.GetComponent<PlayerCombat>().enabled = false;
+        player.GetComponent<PlayerMovement>().enabled = false;
+        enemy.GetComponent<EnemyMovement>().StopMoovingAnimations();
+        enemy.GetComponent<EnemyMovement>().StopAttackingAnimations();
+        enemy.GetComponent<EnemyMovement>().enabled = false;
+        enemy.GetComponent<EnemyAttack>().enabled = false;
+        GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().enabled = false;
+
+        healthBarUI.SetActive(false);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void NextEnemy()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     // ------END------
 }

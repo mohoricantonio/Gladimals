@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool readyToJump;
     private bool isDoubleJumping;
 
-    private bool canDash;
+    public bool canDash;
     private bool isDashing;
     public float dashingPower;
     public float dashingTime;
@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         readyToJump = true;
         rb.drag = drag;
-        canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
         audioSource = GetComponent<AudioSource>();
@@ -93,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                anim.SetBool("CanMove", true);
                 canMoove = true;
             }
             return;
@@ -302,12 +302,14 @@ public class PlayerMovement : MonoBehaviour
     public void cantMoove(int time)
     {
         canMoove = false;
+        anim.SetBool("CanMove", false);
+        anim.SetTrigger("Dizzy");
         canMooveCooldown = time;
     }
     private void RotatePlayerToCamera()
     {
         Vector3 rotation = Quaternion.Euler(0, playerCamera.transform.eulerAngles.y, 0) * new Vector3(0, 0, 1);
         Quaternion desiredRotation = Quaternion.LookRotation(rotation.normalized, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * 2 * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * 5 * Time.deltaTime);
     }
 }
