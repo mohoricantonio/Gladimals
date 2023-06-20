@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool readyToJump;
     private bool isDoubleJumping;
 
-    private bool canDash;
+    public bool canDash;
     private bool isDashing;
     public float dashingPower;
     public float dashingTime;
@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         readyToJump = true;
         rb.drag = drag;
-        canDash = true;
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
         audioSource = GetComponent<AudioSource>();
