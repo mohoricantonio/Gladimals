@@ -93,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                anim.SetBool("CanMove", true);
                 canMoove = true;
             }
             return;
@@ -302,6 +303,8 @@ public class PlayerMovement : MonoBehaviour
     public void cantMoove(int time)
     {
         canMoove = false;
+        anim.SetBool("CanMove", false);
+        anim.SetTrigger("Dizzy");
         canMooveCooldown = time;
     }
     private void RotatePlayerToCamera()
