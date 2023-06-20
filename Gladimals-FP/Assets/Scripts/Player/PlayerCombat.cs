@@ -5,6 +5,9 @@ public class PlayerCombat : MonoBehaviour
 {
     private Animator anim;
     public AudioClip drawWeaponSound;
+    public AudioClip swordSound;
+    public AudioClip crowdHeavySound;
+    private AudioSource arenaAudioSource;
     private AudioSource audioSource;
     private float longPressDuration = 0.2f;
 
@@ -12,6 +15,11 @@ public class PlayerCombat : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
+        GameObject arena = GameObject.FindGameObjectWithTag("Arena");
+        if (arena != null)
+        {
+            arenaAudioSource = arena.GetComponent<AudioSource>();
+        }
         anim.SetBool("FirstAttack", false);
     }
     private void Update()
@@ -40,6 +48,7 @@ public class PlayerCombat : MonoBehaviour
     private void Attack()
     {
         anim.SetTrigger("Attack");
+        audioSource.PlayOneShot(swordSound);
     }
 
     private IEnumerator PlayDrawWeaponSound()
@@ -59,11 +68,18 @@ public class PlayerCombat : MonoBehaviour
             anim.SetTrigger("Sheet weapon");
         }
     }
+
+    private IEnumerator LongAttackSound()
+    {
+        yield return new WaitForSeconds(0.4f);
+        audioSource.PlayOneShot(swordSound);
+    }
+
     private void LongPressAttack()
     {
         anim.SetTrigger("PowerAttack");
+        StartCoroutine(LongAttackSound());
     }
-
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Weapon")

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -838,6 +838,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7187645935914694367, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_Volume
+      value: 0.574
+      objectReference: {fileID: 0}
+    - target: {fileID: -7187645935914694367, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 60951eac74c451844b345df58b1ac064, type: 3}
+    - target: {fileID: -7187645935914694367, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 656156479727552870, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -933,6 +945,10 @@ PrefabInstance:
     - target: {fileID: 7551902340422988976, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551902340422988976, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
+      propertyPath: m_TagString
+      value: Arena
       objectReference: {fileID: 0}
     - target: {fileID: 8171439087308799542, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_Convex
@@ -2190,6 +2206,8 @@ MonoBehaviour:
   currentHealth: 0
   swordCollision: 0
   deathAnim: 0
+  crowdMediumSound: {fileID: 8300000, guid: fec327d22418b574596c03dec1b83fc9, type: 3}
+  swordHitSound: {fileID: 8300000, guid: 67f9affcafbfa1c4aa9ab61399fe8d5f, type: 3}
 --- !u!1001 &1939608514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2246,6 +2264,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: Priority
+      value: 129
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.755
+      objectReference: {fileID: 0}
     - target: {fileID: 3202301768241615837, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: m_WarningMessage
       value: 
@@ -2270,6 +2296,18 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: crowdMediumSound
+      value: 
+      objectReference: {fileID: 8300000, guid: fec327d22418b574596c03dec1b83fc9, type: 3}
+    - target: {fileID: 7581238475541589630, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: swordSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d3264ed8a0701f84ea895ec427ccb83e, type: 3}
+    - target: {fileID: 7581238475541589630, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: crowdHeavySound
+      value: 
+      objectReference: {fileID: 8300000, guid: c05dac79d1940d34bbf0c96b9fc5567b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 667707073900181693, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
