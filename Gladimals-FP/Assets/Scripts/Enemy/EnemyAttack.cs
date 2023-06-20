@@ -120,8 +120,8 @@ public class EnemyAttack : MonoBehaviour
         if (PlayerIsClose())
         {
             player.GetComponent<Rigidbody>().AddForce(transform.forward * kickBackForce + Vector3.up * kickUpForce);
-            player.GetComponent<PlayerMovement>().cantMoove(stunTime);
             player.GetComponent<PlayerHealth>().TakeDamage(10);
+            player.GetComponent<PlayerMovement>().cantMoove(stunTime);
         }
     }
 
