@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public void PlayMenu()
     {
         mainMenu.SetActive(false);
-        SceneManager.LoadScene("HealthBar");
+        SceneManager.LoadScene(0);
     }
 
     // UI Objects Activation / Deactivation
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     // Gets back to main menu
     public void GoMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(1);
     }
 
     // Checks player health status and ends or not the game
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
     public void NextEnemy()
     {
-        SceneManager.LoadScene("FinalFight");
+        SceneManager.LoadScene(2);
     }
 
     // ------END------
