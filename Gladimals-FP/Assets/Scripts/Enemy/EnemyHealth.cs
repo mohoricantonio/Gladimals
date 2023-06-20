@@ -10,6 +10,10 @@ public class EnemyHealth : MonoBehaviour
     public bool deathAnim = false;
     private GameObject player;
     private WeaponChanger playerScript;
+    public AudioClip crowdMediumSound;
+    public AudioClip swordHitSound;
+    private AudioSource arenaAudioSource;
+    private AudioSource playerAudioSource;
 
 
     // Start is called before the first frame update
@@ -18,6 +22,15 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponentInChildren<WeaponChanger>();
+        GameObject arena = GameObject.FindGameObjectWithTag("Arena");
+        if (arena != null)
+        {
+            arenaAudioSource = arena.GetComponent<AudioSource>();
+        }
+        if (player != null)
+        {
+            playerAudioSource = player.GetComponent<AudioSource>();
+        }
     }
 
     private void FixedUpdate()
@@ -36,19 +49,20 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        arenaAudioSource.PlayOneShot(crowdMediumSound);
         currentHealth -= damage;
     }
 
     public bool isDead()
     {
-        if (currentHealth <= 0) return true;
-        else return false;
+        return currentHealth <= 0;
     }
 
     private void CheckIfHited()
     {
         if (playerScript.enemyIsHitable && swordCollision)
         {
+            playerAudioSource.PlayOneShot(swordHitSound);
             NormalDamaged();
         }
     }
