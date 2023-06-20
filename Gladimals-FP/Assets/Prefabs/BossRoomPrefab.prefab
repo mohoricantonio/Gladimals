@@ -506,6 +506,7 @@ GameObject:
   - component: {fileID: 4424297698171482481}
   - component: {fileID: 5715236412469435991}
   - component: {fileID: 889587519121697009}
+  - component: {fileID: 5180620853506505778}
   m_Layer: 0
   m_Name: WallColliders
   m_TagString: Untagged
@@ -591,6 +592,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 100, z: 500}
   m_Center: {x: -110, y: 0, z: 0}
+--- !u!65 &5180620853506505778
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3672039540908340433}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 100, z: 500}
+  m_Center: {x: 110, y: 0, z: 0}
 --- !u!1 &4967177718996316972
 GameObject:
   m_ObjectHideFlags: 0

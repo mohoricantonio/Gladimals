@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject aboutUI;
     public GameObject menuUI;
     public GameObject mainMenu;
+    public GameObject howToPlayUI;
 
     // Loads the game scene
     public void PlayMenu()
@@ -31,8 +32,20 @@ public class GameManager : MonoBehaviour
     // UI Objects Activation / Deactivation
     public void MainMenu()
     {
+        howToPlayUI.SetActive(false);
         aboutUI.SetActive(false);
         menuUI.SetActive(true);
+    }
+
+    public void HowToPlay()
+    {
+        menuUI.SetActive(false);
+        howToPlayUI.SetActive(true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
     // ------END------
 
