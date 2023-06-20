@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     public bool swordCollision = false;
     public bool deathAnim = false;
+    public HealthBar healthBar;
     private GameObject player;
     private WeaponChanger playerScript;
     public AudioClip crowdMediumSound;
@@ -19,7 +20,9 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponentInChildren<WeaponChanger>();
         GameObject arena = GameObject.FindGameObjectWithTag("Arena");
@@ -49,6 +52,7 @@ public class EnemyHealth : MonoBehaviour
     {
         arenaAudioSource.PlayOneShot(crowdMediumSound);
         currentHealth -= damage;
+        healthBar.setHealth(currentHealth);
     }
 
     public bool isDead()
@@ -58,6 +62,8 @@ public class EnemyHealth : MonoBehaviour
 
     private void CheckIfHited()
     {
+        Debug.Log(playerScript);
+        
         if (playerScript.enemyIsHitable && swordCollision)
         {
             NormalDamaged();

@@ -10,7 +10,7 @@ public class WeaponChanger : MonoBehaviour
     private GameObject weaponInHand;
     private GameObject weaponInSheet;
     private GameObject enemy;
-    public bool enemyIsHitable;
+    public bool enemyIsHitable = false;
     private Animator anim;
 
 
