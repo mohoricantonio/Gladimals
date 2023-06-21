@@ -42,7 +42,14 @@ public class PlayerHealth : MonoBehaviour
             } catch { }
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
-            anim.SetTrigger("Dizzy");
+            if (currentHealth <= 0)
+            {
+                anim.SetTrigger("Death");
+            }
+            else
+            {
+                anim.SetTrigger("Dizzy");
+            }
         }
         else
         {
