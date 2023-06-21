@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -17,10 +18,20 @@ public class EnemyMovement : MonoBehaviour
     public int minDistanceToPlayer = 5;
     public int maxDistanceToPlayer = 10;
 
+    private Transform fence;
+    private bool hasRotated;
     private bool isCollidingWithFence;
+    private float collisionCooldownTimer = 1.5f;
+    private float collisionCooldown = 0f;
+    private bool goFdAfterCollision = false;
+    private bool plus = false;
+    private string SideOfFence;
 
     private void Start() {
+        fence = null;
+        SideOfFence = "";
         isCollidingWithFence = false;
+        hasRotated = false;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         enemyAttack = GetComponent<EnemyAttack>();
@@ -31,37 +42,96 @@ public class EnemyMovement : MonoBehaviour
     }
 
     private void Update() {
-        //if (!isCollidingWithFence)
-        //{
+        //Dealing with collision with fence
+        if(collisionCooldown <0) collisionCooldown = 0;
+        if(collisionCooldown > 0)
+        {
+            collisionCooldown -= Time.deltaTime;
+        }
+        //if there is no collision, enemy continues as it should
+        if (!isCollidingWithFence && goFdAfterCollision == false && fence == null)
+        {
             checkGoToPlayer();
             FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
             CkeckDistanceToPlayer();
-        //}
+        }
+        //Dealing with collision with fence
+        else if (!hasRotated && collisionCooldown == 0)
+        {
+            collisionCooldown = collisionCooldownTimer;
+            StopMoovingAnimations();
+            Vector3 directionToTarget = fence.transform.position - transform.position;
+
+            Quaternion targetRotation;
+            if (SideOfFence == "FrontCollider")
+            {
+                targetRotation = Quaternion.Euler(0, fence.transform.eulerAngles.y + 90, 0);
+                plus = false;
+            }
+            else
+            {
+                targetRotation = Quaternion.Euler(0, fence.transform.eulerAngles.y - 90, 0);
+                plus = true;
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 1);
+            animator.SetBool("isRunning", true);
+            hasRotated = true;
+        }
+        if (collisionCooldown == 0 && hasRotated == true && goFdAfterCollision == false)
+        {
+            goFdAfterCollision = true;
+            StopMoovingAnimations();
+            Quaternion targetRotation;
+            if (plus == true)
+                targetRotation = Quaternion.Euler(0, transform.eulerAngles.y - 90, 0);
+            else
+                targetRotation = Quaternion.Euler(0, transform.eulerAngles.y - 90, 0);
+            transform.rotation = targetRotation;
+            animator.SetBool("isRunning", true);
+            StartCoroutine(ResetgoFdAfterCollision());
+        }
     }
 
     private void FixedUpdate() {
         StrafeCheckChangeDirection();
         CheckIfAnimationIsFinished();
     }
-    /*private void OnCollisionEnter(Collision collision)
+
+    private IEnumerator ResetgoFdAfterCollision()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Fence"))
+        yield return new WaitForSeconds(1f);
+
+        goFdAfterCollision = false;
+        isCollidingWithFence = false;
+        hasRotated = false;
+        collisionCooldown = 0;
+        StopMoovingAnimations();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Fence"))
         {
+            SideOfFence = collision.gameObject.tag;
             isCollidingWithFence = true;
-            // Collision with object on the "Fence" layer
-            Debug.Log("Collision with fence detected!");
-            animator.SetBool("StrafeLeft", true);
+            fence = collision.transform;
         }
     }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Fence"))
-        {   
-            Debug.Log("Collision with fence ended!");
-            animator.SetBool("StrafeLeft", false);
-            isCollidingWithFence = false;
+        {
+            fence = null;
+            if (collisionCooldown == 0)
+            {
+                isCollidingWithFence = false;
+                goFdAfterCollision = false;
+                
+                hasRotated = false;
+                collisionCooldown = 0;
+                StopMoovingAnimations();
+            }
         }
-    }*/
+    }
 
     public void FocusTarget(Transform target)
     {

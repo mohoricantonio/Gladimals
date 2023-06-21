@@ -308,12 +308,16 @@ public class PlayerMovement : MonoBehaviour
     }
     public void cantMoove(int time)
     {
-        canMoove = false;
-        anim.SetBool("CanMove", false);
-        if (!GetComponent<PlayerHealth>().isDead()){
-            anim.SetTrigger("Dizzy");
+        if(anim.GetBool("Blocking") == false)
+        {
+            canMoove = false;
+            anim.SetBool("CanMove", false);
+            if (!GetComponent<PlayerHealth>().isDead())
+            {
+                anim.SetTrigger("Dizzy");
+            }
+            canMooveCooldown = time;
         }
-        canMooveCooldown = time;
     }
     private void RotatePlayerToCamera()
     {
