@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         SceneManager.LoadScene(0);
+        statistics.SetStartTime();
     }
 
     // UI Objects Activation / Deactivation
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     public GameObject WinnerUI;
     public AudioClip crowdHeavySound;
     public GameObject pauseMenuUI;
+    public Statistics statistics;
 
     // Private Vriables
     private bool endGame = false;
@@ -70,12 +72,14 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         arena = GameObject.Find("ArenaPrefab");
+        statistics = GetComponent<Statistics>();
     }
 
     // Reloads the scene to play again
     public void PlayAgain()
     {
         Time.timeScale = 1;
+        statistics.SetStartTime();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -105,7 +109,7 @@ public class GameManager : MonoBehaviour
     {
         CheckEndGame();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             PauseGame();
         }
@@ -115,9 +119,13 @@ public class GameManager : MonoBehaviour
     {
         StopGameScripts();
         enemy.GetComponent<Animator>().SetTrigger("Death");
-        arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
+        try{
+            arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
+        }
+        catch{}
         player.GetComponent<PlayerCombat>().DrawWeapon();
         WinnerUI.SetActive(true);
+        statistics.SetStat();
     }
 
     void StopGameScripts()
@@ -142,6 +150,7 @@ public class GameManager : MonoBehaviour
 
     public void NextEnemy()
     {
+        statistics.SetStartTime();
         SceneManager.LoadScene(2);
     }
 
