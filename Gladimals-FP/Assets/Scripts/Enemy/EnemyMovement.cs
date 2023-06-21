@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -20,6 +21,9 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform fence;
     private bool hasRotated;
+    public bool canMove = true;
+    public float cantMoveCooldown; 
+
     private bool isCollidingWithFence;
     private float collisionCooldownTimer = 1.5f;
     private float collisionCooldown = 0f;
@@ -92,9 +96,33 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate() {
-        StrafeCheckChangeDirection();
-        CheckIfAnimationIsFinished();
+    private void FixedUpdate()
+    {
+        checkGoToPlayer();
+        FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
+
+        if (canMove)
+        {
+            CkeckDistanceToPlayer();
+            StrafeCheckChangeDirection();
+            CheckIfAnimationIsFinished();
+        }
+        else
+        {
+            StopMoovingAnimations();
+            StopAttackingAnimations();
+
+            if (cantMoveCooldown > 0)
+            {
+                cantMoveCooldown -= Time.deltaTime;
+            }
+            else
+            {
+                canMove = true;
+                StrafeTime = 0; //To do the enemy move immediately 
+                animator.SetBool("canMove", true);
+            }
+        }
     }
 
     private IEnumerator ResetgoFdAfterCollision()
@@ -238,7 +266,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-        public void StopMoovingAnimations(){
+    public void StopMoovingAnimations(){
         animator.SetBool("StrafeLeft", false);
         animator.SetBool("StrafeRight", false);
         animator.SetBool("isRunning", false);
@@ -247,6 +275,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void CkeckDistanceToPlayer()
     {
+
         if (isAttacking)
         {
             return;
@@ -272,5 +301,12 @@ public class EnemyMovement : MonoBehaviour
         animator.SetBool("slashAttack", false);
         animator.SetBool("kickAttack", false);
         animator.SetBool("JumpAttack", false);
+    }
+
+    public void CantMove(float time)
+    {
+        canMove = false;
+        animator.SetBool("canMove", false);
+        cantMoveCooldown = time;
     }
 }

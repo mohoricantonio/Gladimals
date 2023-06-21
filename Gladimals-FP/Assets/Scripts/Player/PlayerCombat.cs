@@ -9,11 +9,15 @@ public class PlayerCombat : MonoBehaviour
     private AudioSource audioSource;
     private float longPressDuration = 0.2f;
 
+    private GameObject enemy;
+    public float HeavyAttackStunTime = 2;
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
         anim.SetBool("FirstAttack", false);
+        enemy = enemy = GameObject.FindGameObjectWithTag("Enemy");
     }
     private void Update()
     {
@@ -68,12 +72,12 @@ public class PlayerCombat : MonoBehaviour
     private void LongPressAttack()
     {
         anim.SetTrigger("PowerAttack");
+        
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Weapon")
         {
-            //Debug.Log("Enemy hit");
             GetComponent<PlayerHealth>().swordCollision = true;
         }
     }

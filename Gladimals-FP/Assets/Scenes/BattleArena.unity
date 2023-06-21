@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4328,6 +4328,10 @@ PrefabInstance:
       propertyPath: crowdHeavySound
       value: 
       objectReference: {fileID: 8300000, guid: c05dac79d1940d34bbf0c96b9fc5567b, type: 3}
+    - target: {fileID: 7581238475541589630, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: HeavyAttackStunTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 667707073900181693, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
