@@ -36,8 +36,10 @@ public class PlayerHealth : MonoBehaviour
         if(anim.GetBool("Blocking") == false)
         {
             playerAudioSource.PlayOneShot(catMeowSound);
-            arenaAudioSource.Stop();
-            arenaAudioSource.PlayOneShot(crowdMediumSound, 0.4f);
+            try
+            {
+                arenaAudioSource.PlayOneShot(crowdMediumSound, 0.4f);
+            } catch { }
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
             anim.SetTrigger("Dizzy");
