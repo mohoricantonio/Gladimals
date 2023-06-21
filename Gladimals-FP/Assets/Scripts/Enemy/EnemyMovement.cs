@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,9 @@ public class EnemyMovement : MonoBehaviour
     public int minDistanceToPlayer = 5;
     public int maxDistanceToPlayer = 10;
 
+    public bool canMove = true;
+    public float cantMoveCooldown; 
+
     private void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -27,15 +31,33 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private void FixedUpdate()
+    {
         checkGoToPlayer();
         FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
-        CkeckDistanceToPlayer();
-    }
 
-    private void FixedUpdate() {
-        StrafeCheckChangeDirection();
-        CheckIfAnimationIsFinished();
+        if (canMove)
+        {
+            CkeckDistanceToPlayer();
+            StrafeCheckChangeDirection();
+            CheckIfAnimationIsFinished();
+        }
+        else
+        {
+            StopMoovingAnimations();
+            StopAttackingAnimations();
+
+            if (cantMoveCooldown > 0)
+            {
+                cantMoveCooldown -= Time.deltaTime;
+            }
+            else
+            {
+                canMove = true;
+                StrafeTime = 0; //To do the enemy move immediately 
+                animator.SetBool("canMove", true);
+            }
+        }
     }
 
     public void FocusTarget(Transform target)
@@ -143,7 +165,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-        public void StopMoovingAnimations(){
+    public void StopMoovingAnimations(){
         animator.SetBool("StrafeLeft", false);
         animator.SetBool("StrafeRight", false);
         animator.SetBool("isRunning", false);
@@ -152,6 +174,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void CkeckDistanceToPlayer()
     {
+
         if (isAttacking)
         {
             return;
@@ -177,5 +200,12 @@ public class EnemyMovement : MonoBehaviour
         animator.SetBool("slashAttack", false);
         animator.SetBool("kickAttack", false);
         animator.SetBool("JumpAttack", false);
+    }
+
+    public void CantMove(float time)
+    {
+        canMove = false;
+        animator.SetBool("canMove", false);
+        cantMoveCooldown = time;
     }
 }

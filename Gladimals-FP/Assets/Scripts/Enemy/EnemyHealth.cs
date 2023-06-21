@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
     public AudioClip swordHitSound;
     private AudioSource arenaAudioSource;
     private AudioSource playerAudioSource;
+    private Animator animator;
 
 
     // Start is called before the first frame update
@@ -62,11 +63,16 @@ public class EnemyHealth : MonoBehaviour
 
     private void CheckIfHited()
     {
-        Debug.Log(playerScript);
-        
         if (playerScript.enemyIsHitable && swordCollision)
         {
             NormalDamaged();
+            if (player.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(1).IsName("PowerSlash")
+                && GetComponent<EnemyMovement>().canMove)
+            {
+                GetComponent<EnemyMovement>().CantMove(player.GetComponent<PlayerCombat>().HeavyAttackStunTime);
+                GetComponent<EnemyMovement>().isAttacking = false;
+
+            }
         }
     }
 

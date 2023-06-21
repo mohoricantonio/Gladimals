@@ -25,13 +25,13 @@ public class EnemyAttack : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if (timeToAttack > 0)
+        if (timeToAttack > 0 && enemyMovement.canMove)
         {
             timeToAttack -= Time.deltaTime;
             lastAttackCooldown -= Time.deltaTime;
             CheckIfPlayerIsClose();
         }
-        if (timeToAttack <= 0)
+        if (timeToAttack <= 0 && enemyMovement.canMove)
         {
             Attack();
         }
