@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     public GameObject healthBarUI;
     public GameObject WinnerUI;
     public AudioClip crowdHeavySound;
+    public GameObject pauseMenuUI;
 
     // Private Vriables
     private bool endGame = false;
@@ -74,12 +75,14 @@ public class GameManager : MonoBehaviour
     // Reloads the scene to play again
     public void PlayAgain()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Gets back to main menu
     public void GoMainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
 
@@ -101,6 +104,11 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckEndGame();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
     }
 
     public void PlayerWinScript()
@@ -135,6 +143,22 @@ public class GameManager : MonoBehaviour
     public void NextEnemy()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void PauseGame()
+    {
+        pauseMenuUI.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenuUI.SetActive(false);
     }
 
     // ------END------
