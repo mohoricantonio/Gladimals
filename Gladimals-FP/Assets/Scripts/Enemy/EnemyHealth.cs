@@ -52,7 +52,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         try{
-            arenaAudioSource.PlayOneShot(crowdMediumSound);
+            arenaAudioSource.PlayOneShot(crowdMediumSound, 0.4f);
         }
         catch{}
         currentHealth -= damage;

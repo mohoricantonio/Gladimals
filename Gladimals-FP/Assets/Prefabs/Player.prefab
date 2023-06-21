@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawWeaponSound: {fileID: 8300000, guid: 3d5df117ab29c2c489817d96f1c2eb33, type: 3}
+  HeavyAttackStunTime: 2
 --- !u!114 &6774217289165549029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,8 +569,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 17.468786, y: 75.45187, z: 10.31372}
-  m_Center: {x: 0.82972974, y: 37.620308, z: 0.74979305}
+  m_Size: {x: 22, y: 75.45187, z: 15}
+  m_Center: {x: 0, y: 37.620308, z: 0}
 --- !u!114 &4863001661128001246
 MonoBehaviour:
   m_ObjectHideFlags: 0

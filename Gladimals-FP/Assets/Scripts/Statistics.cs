@@ -15,7 +15,6 @@ public class Statistics : MonoBehaviour
     public void SetStartTime()
     {
         startTime = Time.time;
-        Debug.Log("Set Start Time : " + startTime);
     }
 
     // Update is called once per frame

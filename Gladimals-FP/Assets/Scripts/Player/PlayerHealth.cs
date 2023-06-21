@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
         if(anim.GetBool("Blocking") == false)
         {
             playerAudioSource.PlayOneShot(catMeowSound);
-            arenaAudioSource.PlayOneShot(crowdMediumSound);
+            arenaAudioSource.PlayOneShot(crowdMediumSound, 0.4f);
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
         }

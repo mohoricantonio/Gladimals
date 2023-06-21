@@ -112,7 +112,7 @@ public class EnemyMovement : MonoBehaviour
     }
 
     public void StrafeCheckChangeDirection(){
-        if (StrafeTime <= 0){
+        if (StrafeTime <= 0 && !isAttacking){
             StrafeTime = Random.Range(5f, 10f);
             ChangeStrafeDirection();
         }
@@ -218,7 +218,7 @@ public class EnemyMovement : MonoBehaviour
         
     }
 
-       internal void StopAttackingAnimations()
+    internal void StopAttackingAnimations()
     {
         animator.SetBool("slashAttack", false);
         animator.SetBool("kickAttack", false);

@@ -62,6 +62,7 @@ public class EnemyAttack : MonoBehaviour
             enemyMovement.Run();
         }
         else{
+            enemyMovement.isAttacking = true;
             timeToAttack = Random.Range(5, 10);
             enemyMovement.StopMoovingAnimations();
 
@@ -94,6 +95,7 @@ public class EnemyAttack : MonoBehaviour
         else if(stateInfo.IsName("KickAttack") && stateInfo.normalizedTime >= 1.0f){
             animator.SetBool("kickAttack", false);
             if (isComboKickJump){
+                enemyMovement.StopMoovingAnimations();
                 animator.SetBool("JumpAttack", true);
                 enemyMovement.isAttacking = true;
             }
