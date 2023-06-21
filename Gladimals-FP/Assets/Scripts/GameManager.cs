@@ -97,7 +97,10 @@ public class GameManager : MonoBehaviour
         if (player.GetComponent<PlayerHealth>().isDead() && !endGame){
             endGame = true;
             player.GetComponentInChildren<Animator>().SetTrigger("Death");
-            arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
+            try{
+                arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
+            }
+            catch{}
 
             StopGameScripts();
 
