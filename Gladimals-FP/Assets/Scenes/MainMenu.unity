@@ -11499,16 +11499,18 @@ MonoBehaviour:
   m_text: "This game was developed by 6 students for the final project of the DDJD
     Curricular Unit in 2023 @ FEUP\n\nThe students are :\n- Aur\xE9lien Da Fonseca\n-
     Axel Curaudeau\n- Antonio Mohori\u0107\n- Pedro Pacheco\n- Margarida Pinho\n-
-    Vasco Alves\n\nStory:\n\nThe world is populated by humans, animals and hybrid
-    creatures between humans and animals.\r\nThe emperor of the world has used the
-    superiority of humans to capture the hybrids.\r\nEvery year, for entertainment
-    purposes, hybrids of different species fight it out in an arena.\r\nWhoever wins
-    the tournament, and defeats every other species, wins the right to face the emperor,
-    and earns the right to be part of the emperor's army, and to be free.\r\nEach
-    species has its own characteristics, strengths and weaknesses.\r\nThe strongest
-    of them all are humans.\r\nYou take on the role of a human-cat fighting for his
-    freedom, the freedom of his fellow human-cats, and the freedom of all the Emperor's
-    prisoners.\r\n"
+    Vasco Alves\n\nThe sound was designed by the Sound design team:\n- Carlos Fernandes\n-
+    David Varela\n- Ricardo Albuquerque\n\nThe 3D models was designed by the Modeler
+    team:\n- Marika Pokhodnia\n- Amir Orouji\n- Luiz Santos\n\nStory:\n\nThe world
+    is populated by humans, animals and hybrid creatures between humans and animals.\r\nThe
+    emperor of the world has used the superiority of humans to capture the hybrids.\r\nEvery
+    year, for entertainment purposes, hybrids of different species fight it out in
+    an arena.\r\nWhoever wins the tournament, and defeats every other species, wins
+    the right to face the emperor, and earns the right to be part of the emperor's
+    army, and to be free.\r\nEach species has its own characteristics, strengths
+    and weaknesses.\r\nThe strongest of them all are humans.\r\nYou take on the role
+    of a human-cat fighting for his freedom, the freedom of his fellow human-cats,
+    and the freedom of all the Emperor's prisoners.\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
