@@ -89,16 +89,16 @@ public class EnemyHealth : MonoBehaviour
         float now = Time.time;
         if((now - lastHitTime <= timeBetweenDamageCombo) && attackComboCounter == 2)
         {
-            TakeDamage(30);
+            TakeDamage(15);
         }
         else if((now - lastHitTime <= timeBetweenDamageCombo) && attackComboCounter == 3)
         {
-            TakeDamage(60);
+            TakeDamage(30);
             attackComboCounter = 0;
         }
         else
         {
-            TakeDamage(20);
+            TakeDamage(10);
             playerScript.enemyIsHitable = false;
             GetComponent<EnemyMovement>().Hited();
             playerAudioSource.PlayOneShot(swordHitSound);

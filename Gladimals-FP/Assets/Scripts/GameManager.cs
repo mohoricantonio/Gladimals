@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public void PlayMenu()
     {
         mainMenu.SetActive(false);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
         statistics.SetStartTime();
     }
 
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     public void GoMainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     // Checks player health status and ends or not the game
