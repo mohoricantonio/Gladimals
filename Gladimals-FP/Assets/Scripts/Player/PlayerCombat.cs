@@ -21,6 +21,10 @@ public class PlayerCombat : MonoBehaviour
         {
             DrawWeapon();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            anim.SetTrigger("Block");
+        }
 
         if (anim.GetBool("Weapon drawn"))
         {
