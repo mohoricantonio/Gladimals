@@ -93,6 +93,7 @@ public class EnemyHealth : MonoBehaviour
         else if(Time.time - lastHitTime <= timeBetwwenDamageCombo && attackComboCounter == 3)
         {
             TakeDamage(60);
+            attackComboCounter = 0;
         }
         else
         {
