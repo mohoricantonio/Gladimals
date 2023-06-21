@@ -326,6 +326,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &270477241 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8649335318863521448, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+  m_PrefabInstance: {fileID: 1939608514}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &388318327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,7 +1411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 3
-  target: {fileID: 1683748527}
+  target: {fileID: 270477241}
   distanceFromTarget: 15
   smoothTime: 0.03
   rotationXMinMax: {x: -40, y: 40}
@@ -2257,11 +2262,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!4 &1683748527 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6480944743298434140, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
-  m_PrefabInstance: {fileID: 1939608514}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1762108619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,6 +2338,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762108619}
   m_CullTransparentMesh: 1
+--- !u!1 &1825501699 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8224402762458688464, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+  m_PrefabInstance: {fileID: 1939608514}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1851048759
 GameObject:
   m_ObjectHideFlags: 0
@@ -2581,6 +2586,14 @@ PrefabInstance:
       propertyPath: movementSpeed
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 4863001661128001246, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: sheetWeapon
+      value: 
+      objectReference: {fileID: 2074864988}
+    - target: {fileID: 4863001661128001246, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: weaponHolder
+      value: 
+      objectReference: {fileID: 1825501699}
     - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: healthBar
       value: 
@@ -2589,6 +2602,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: blockSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f74df7374a51e884597a93410ef77e10, type: 3}
     - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: catMeowSound
       value: 
@@ -3064,6 +3081,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052308466}
   m_CullTransparentMesh: 1
+--- !u!1 &2074864988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1072010006943657402, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+  m_PrefabInstance: {fileID: 1939608514}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2090049408
 GameObject:
   m_ObjectHideFlags: 0

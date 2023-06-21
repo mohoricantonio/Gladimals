@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed;
+    private float originalMovementSpeed;
     public float rotationSpeed = 10f;
     private float horizontalInput;
     private float verticalInput;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         trailRenderer = GetComponent<TrailRenderer>();
         isDoubleJumping = false;
         audioSource = GetComponent<AudioSource>();
+        originalMovementSpeed = movementSpeed;
 
         anim.SetBool("CanMove", true);
         anim.SetBool("Weapon drawn", false);
@@ -70,6 +72,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (anim.GetBool("Weapon drawn") && movementSpeed == originalMovementSpeed)
+        {
+            movementSpeed = movementSpeed / 1.5f;
+        }
+        else
+        {
+            movementSpeed = originalMovementSpeed;
+        }
         if (isDashing || !canMoove)
         {
             return;
@@ -130,7 +140,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Move()
     {
-
+        if(anim.GetBool("Weapon drawn"))
+        {
+            RotatePlayerToCamera();
+        }
         if (isMoving == false || isGrounded == false)
         {
             ResetAnimations();
@@ -160,12 +173,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 movementDirection = moveDirection.normalized;
         Vector3 rotationDirection = rotateDirection.normalized;
-
-        if(Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-        {
-            RotatePlayerToCamera();
-        }
-
 
         try
         {

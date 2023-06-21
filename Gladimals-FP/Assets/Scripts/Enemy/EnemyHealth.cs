@@ -62,8 +62,6 @@ public class EnemyHealth : MonoBehaviour
 
     private void CheckIfHited()
     {
-        Debug.Log(playerScript);
-        
         if (playerScript.enemyIsHitable && swordCollision)
         {
             NormalDamaged();

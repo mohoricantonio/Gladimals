@@ -19,9 +19,10 @@ public class WeaponChanger : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         weaponInSheet = Instantiate(weapon, sheetWeapon.transform);
+
+        anim.SetBool("Blocking", false);
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemyIsHitable = false;
-
     }
 
     public void WeaponDraw()
@@ -73,6 +74,14 @@ public class WeaponChanger : MonoBehaviour
     public void ResetCanMove()
     {
         anim.SetBool("CanMove", false);
+    }
+    public void SetBlocking()
+    {
+        anim.SetBool("Blocking", true);
+    }
+    public void ResetBlocking()
+    {
+        anim.SetBool("Blocking", false);
     }
 
     public void StartDamageStepEvent()
