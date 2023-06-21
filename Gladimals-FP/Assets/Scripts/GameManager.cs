@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
     {
         CheckEndGame();
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
