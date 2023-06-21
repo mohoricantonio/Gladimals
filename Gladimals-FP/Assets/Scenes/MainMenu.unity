@@ -679,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 707318000}
   - component: {fileID: 707317999}
+  - component: {fileID: 707318001}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -704,9 +705,13 @@ MonoBehaviour:
   howToPlayUI: {fileID: 162583617}
   player: {fileID: 0}
   enemy: {fileID: 0}
+  arena: {fileID: 0}
   gameOverUI: {fileID: 0}
   healthBarUI: {fileID: 0}
   WinnerUI: {fileID: 0}
+  crowdHeavySound: {fileID: 0}
+  pauseMenuUI: {fileID: 0}
+  statistics: {fileID: 0}
 --- !u!4 &707318000
 Transform:
   m_ObjectHideFlags: 0
@@ -722,6 +727,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &707318001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707317998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb49c9471292a2478a9ecfa76d7014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTime: 0
+  EndTime: 0
 --- !u!1 &754086543
 GameObject:
   m_ObjectHideFlags: 0

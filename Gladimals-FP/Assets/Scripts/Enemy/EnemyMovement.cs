@@ -21,7 +21,10 @@ public class EnemyMovement : MonoBehaviour
     public bool canMove = true;
     public float cantMoveCooldown; 
 
+    private bool isCollidingWithFence;
+
     private void Start() {
+        isCollidingWithFence = false;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         enemyAttack = GetComponent<EnemyAttack>();
@@ -30,6 +33,7 @@ public class EnemyMovement : MonoBehaviour
             animator.SetTrigger("Start");
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -59,6 +63,25 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Fence"))
+        {
+            isCollidingWithFence = true;
+            // Collision with object on the "Fence" layer
+            Debug.Log("Collision with fence detected!");
+            animator.SetBool("StrafeLeft", true);
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Fence"))
+        {   
+            Debug.Log("Collision with fence ended!");
+            animator.SetBool("StrafeLeft", false);
+            isCollidingWithFence = false;
+        }
+    }*/
 
     public void FocusTarget(Transform target)
     {

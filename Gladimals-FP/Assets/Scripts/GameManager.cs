@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         SceneManager.LoadScene(0);
+        statistics.SetStartTime();
     }
 
     // UI Objects Activation / Deactivation
@@ -61,6 +62,8 @@ public class GameManager : MonoBehaviour
     public GameObject healthBarUI;
     public GameObject WinnerUI;
     public AudioClip crowdHeavySound;
+    public GameObject pauseMenuUI;
+    public Statistics statistics;
 
     // Private Vriables
     private bool endGame = false;
@@ -69,17 +72,21 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
         arena = GameObject.Find("ArenaPrefab");
+        statistics = GetComponent<Statistics>();
     }
 
     // Reloads the scene to play again
     public void PlayAgain()
     {
+        Time.timeScale = 1;
+        statistics.SetStartTime();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Gets back to main menu
     public void GoMainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
 
@@ -101,15 +108,24 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckEndGame();
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PauseGame();
+        }
     }
 
     public void PlayerWinScript()
     {
         StopGameScripts();
         enemy.GetComponent<Animator>().SetTrigger("Death");
-        arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
+        try{
+            arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
+        }
+        catch{}
         player.GetComponent<PlayerCombat>().DrawWeapon();
         WinnerUI.SetActive(true);
+        statistics.SetStat();
     }
 
     void StopGameScripts()
@@ -134,7 +150,24 @@ public class GameManager : MonoBehaviour
 
     public void NextEnemy()
     {
+        statistics.SetStartTime();
         SceneManager.LoadScene(2);
+    }
+
+    public void PauseGame()
+    {
+        pauseMenuUI.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenuUI.SetActive(false);
     }
 
     // ------END------
