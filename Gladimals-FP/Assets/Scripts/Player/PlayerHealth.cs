@@ -39,6 +39,7 @@ public class PlayerHealth : MonoBehaviour
             arenaAudioSource.PlayOneShot(crowdMediumSound, 0.4f);
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
+            anim.SetTrigger("Dizzy");
         }
         else
         {
