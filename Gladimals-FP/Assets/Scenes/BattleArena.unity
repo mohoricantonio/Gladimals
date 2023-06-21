@@ -4192,6 +4192,7 @@ MonoBehaviour:
   healthBar: {fileID: 527807445}
   crowdMediumSound: {fileID: 8300000, guid: fec327d22418b574596c03dec1b83fc9, type: 3}
   swordHitSound: {fileID: 8300000, guid: 67f9affcafbfa1c4aa9ab61399fe8d5f, type: 3}
+  timeBetweenDamageCombo: 1
 --- !u!1001 &1939608514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4262,7 +4263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: Priority
-      value: 129
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: m_Volume
