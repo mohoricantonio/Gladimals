@@ -28,8 +28,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        playerAudioSource.PlayOneShot(catMeowSound);
-        arenaAudioSource.PlayOneShot(crowdMediumSound);
+        try{
+            playerAudioSource.PlayOneShot(catMeowSound);
+            arenaAudioSource.PlayOneShot(crowdMediumSound);
+        }
+        catch{}
         currentHealth -= damage;
         healthBar.setHealth(currentHealth);
     }
