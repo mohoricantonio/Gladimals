@@ -11,6 +11,7 @@ public class PlayerCombat : MonoBehaviour
 
     private GameObject enemy;
     public float HeavyAttackStunTime = 2;
+    private float powerAttackCooldown = 2f;
 
     private void Start()
     {
@@ -45,6 +46,11 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
         }
+
+        if (powerAttackCooldown > 0)
+        {
+            powerAttackCooldown -= Time.deltaTime;
+        }
     }
     private void Attack()
     {
@@ -71,7 +77,10 @@ public class PlayerCombat : MonoBehaviour
 
     private void LongPressAttack()
     {
-        anim.SetTrigger("PowerAttack");
+        if (powerAttackCooldown <= 0){
+            powerAttackCooldown = 2f;
+            anim.SetTrigger("PowerAttack");
+        }
         
     }
 
