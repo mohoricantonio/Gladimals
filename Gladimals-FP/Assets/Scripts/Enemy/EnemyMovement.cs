@@ -55,9 +55,7 @@ public class EnemyMovement : MonoBehaviour
         //if there is no collision, enemy continues as it should
         if (!isCollidingWithFence && goFdAfterCollision == false && fence == null)
         {
-            checkGoToPlayer();
-            FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
-            CkeckDistanceToPlayer();
+            
         }
         //Dealing with collision with fence
         else if (!hasRotated && collisionCooldown == 0)
@@ -107,6 +105,7 @@ public class EnemyMovement : MonoBehaviour
                 CkeckDistanceToPlayer();
                 StrafeCheckChangeDirection();
                 CheckIfAnimationIsFinished();
+
             }
             else
             {
