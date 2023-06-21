@@ -17,6 +17,10 @@ public class EnemyHealth : MonoBehaviour
     private AudioSource playerAudioSource;
     private Animator animator;
 
+    public float timeBetwwenDamageCombo = 1.0f;
+    private float lastHitTime = 0f;
+    private int attackComboCounter = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -69,22 +73,34 @@ public class EnemyHealth : MonoBehaviour
         if (playerScript.enemyIsHitable && swordCollision)
         {
             NormalDamaged();
+            lastHitTime = Time.time;
+            attackComboCounter++;
             if (player.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(1).IsName("PowerSlash")
                 && GetComponent<EnemyMovement>().canMove)
             {
                 GetComponent<EnemyMovement>().CantMove(player.GetComponent<PlayerCombat>().HeavyAttackStunTime);
                 GetComponent<EnemyMovement>().isAttacking = false;
-
             }
         }
     }
 
     public void NormalDamaged()
     {
-        TakeDamage(20);
-        playerScript.enemyIsHitable = false;
-        GetComponent<EnemyMovement>().Hited();
-        playerAudioSource.PlayOneShot(swordHitSound);
+        if(Time.time - lastHitTime <= timeBetwwenDamageCombo && attackComboCounter == 2)
+        {
+            TakeDamage(30);
+        }
+        else if(Time.time - lastHitTime <= timeBetwwenDamageCombo && attackComboCounter == 3)
+        {
+            TakeDamage(60);
+        }
+        else
+        {
+            TakeDamage(20);
+            playerScript.enemyIsHitable = false;
+            GetComponent<EnemyMovement>().Hited();
+            playerAudioSource.PlayOneShot(swordHitSound);
+        }
     }
 
     public void HighDamaged()

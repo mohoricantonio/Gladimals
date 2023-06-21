@@ -13,6 +13,14 @@ public class PlayerCombat : MonoBehaviour
     public float HeavyAttackStunTime = 2;
     private float powerAttackCooldown = 2f;
 
+    [Header("Combo Fileds")]
+    public static int numberOfClicks = 0;
+    public float comboCooldownTime = 2f;
+    public float nextFireTime = 0f;
+    float lastClickedTime = 0;
+    float maximumComboDelay = 1;
+
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -96,5 +104,10 @@ public class PlayerCombat : MonoBehaviour
         {
             GetComponent<PlayerHealth>().swordCollision = false;
         }
+    }
+
+    private void OnClick()
+    {
+        
     }
 }
