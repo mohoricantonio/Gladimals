@@ -98,29 +98,31 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        checkGoToPlayer();
-        FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
+        if (!isCollidingWithFence && goFdAfterCollision == false && fence == null){
+            checkGoToPlayer();
+            FocusTarget(GameObject.FindGameObjectWithTag("Player").transform);
 
-        if (canMove)
-        {
-            CkeckDistanceToPlayer();
-            StrafeCheckChangeDirection();
-            CheckIfAnimationIsFinished();
-        }
-        else
-        {
-            StopMoovingAnimations();
-            StopAttackingAnimations();
-
-            if (cantMoveCooldown > 0)
+            if (canMove)
             {
-                cantMoveCooldown -= Time.deltaTime;
+                CkeckDistanceToPlayer();
+                StrafeCheckChangeDirection();
+                CheckIfAnimationIsFinished();
             }
             else
             {
-                canMove = true;
-                StrafeTime = 0; //To do the enemy move immediately 
-                animator.SetBool("canMove", true);
+                StopMoovingAnimations();
+                StopAttackingAnimations();
+
+                if (cantMoveCooldown > 0)
+                {
+                    cantMoveCooldown -= Time.deltaTime;
+                }
+                else
+                {
+                    canMove = true;
+                    StrafeTime = 0; //To do the enemy move immediately 
+                    animator.SetBool("canMove", true);
+                }
             }
         }
     }
@@ -139,6 +141,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Fence"))
         {
+           
             SideOfFence = collision.gameObject.tag;
             isCollidingWithFence = true;
             fence = collision.transform;
