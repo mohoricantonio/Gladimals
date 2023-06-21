@@ -56,9 +56,11 @@ public class GameManager : MonoBehaviour
     [Header("Game Variables")]
     public GameObject player;
     public GameObject enemy;
+    public GameObject arena;
     public GameObject gameOverUI;
     public GameObject healthBarUI;
     public GameObject WinnerUI;
+    public AudioClip crowdHeavySound;
 
     // Private Vriables
     private bool endGame = false;
@@ -66,6 +68,7 @@ public class GameManager : MonoBehaviour
     private void Start() {
         player = GameObject.Find("Player");
         enemy = GameObject.Find("Enemy");
+        arena = GameObject.Find("ArenaPrefab");
     }
 
     // Reloads the scene to play again
@@ -87,6 +90,7 @@ public class GameManager : MonoBehaviour
         if (player.GetComponent<PlayerHealth>().isDead() && !endGame){
             endGame = true;
             player.GetComponentInChildren<Animator>().SetTrigger("Death");
+            arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
 
             StopGameScripts();
 
@@ -103,6 +107,7 @@ public class GameManager : MonoBehaviour
     {
         StopGameScripts();
         enemy.GetComponent<Animator>().SetTrigger("Death");
+        arena.GetComponentInChildren<AudioSource>().PlayOneShot(crowdHeavySound);
         player.GetComponent<PlayerCombat>().DrawWeapon();
         WinnerUI.SetActive(true);
     }

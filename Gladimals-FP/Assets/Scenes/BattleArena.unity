@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -975,7 +975,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7187645935914694367, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_Volume
-      value: 0.574
+      value: 0.499
       objectReference: {fileID: 0}
     - target: {fileID: -7187645935914694367, guid: e2939e01d7f171748a93f5f39169c5e9, type: 3}
       propertyPath: m_audioClip
@@ -2558,6 +2558,10 @@ PrefabInstance:
       value: 129
       objectReference: {fileID: 0}
     - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0.755
       objectReference: {fileID: 0}
@@ -2585,6 +2589,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: catMeowSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f3dc51f7d5bc4ad41b3bb60af493d4e4, type: 3}
     - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: crowdMediumSound
       value: 
@@ -2912,9 +2920,11 @@ MonoBehaviour:
   howToPlayUI: {fileID: 0}
   player: {fileID: 1939608515}
   enemy: {fileID: 1891421973}
+  arena: {fileID: 0}
   gameOverUI: {fileID: 2035658523}
   healthBarUI: {fileID: 1558350691}
   WinnerUI: {fileID: 984370559}
+  crowdHeavySound: {fileID: 8300000, guid: c05dac79d1940d34bbf0c96b9fc5567b, type: 3}
 --- !u!4 &2018611729
 Transform:
   m_ObjectHideFlags: 0

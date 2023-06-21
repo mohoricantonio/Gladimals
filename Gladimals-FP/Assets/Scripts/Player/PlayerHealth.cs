@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     public HealthBar healthBar;
     public AudioClip crowdMediumSound;
     private AudioSource arenaAudioSource;
+    private AudioSource playerAudioSource;
+    public AudioClip catMeowSound;
 
     // Start is called before the first frame update
     void Start()
@@ -21,10 +23,12 @@ public class PlayerHealth : MonoBehaviour
         {
             arenaAudioSource = arena.GetComponent<AudioSource>();
         }
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamage(int damage)
     {
+        playerAudioSource.PlayOneShot(catMeowSound);
         arenaAudioSource.PlayOneShot(crowdMediumSound);
         currentHealth -= damage;
         healthBar.setHealth(currentHealth);

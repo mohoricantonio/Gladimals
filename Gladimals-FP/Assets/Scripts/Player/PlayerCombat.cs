@@ -5,8 +5,7 @@ public class PlayerCombat : MonoBehaviour
 {
     private Animator anim;
     public AudioClip drawWeaponSound;
-    public AudioClip crowdHeavySound;
-    private AudioSource arenaAudioSource;
+
     private AudioSource audioSource;
     private float longPressDuration = 0.2f;
 
@@ -14,11 +13,6 @@ public class PlayerCombat : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
-        GameObject arena = GameObject.FindGameObjectWithTag("Arena");
-        if (arena != null)
-        {
-            arenaAudioSource = arena.GetComponent<AudioSource>();
-        }
         anim.SetBool("FirstAttack", false);
     }
     private void Update()
@@ -67,15 +61,9 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    private IEnumerator LongAttackSound()
-    {
-        yield return new WaitForSeconds(0.4f);
-    }
-
     private void LongPressAttack()
     {
         anim.SetTrigger("PowerAttack");
-        StartCoroutine(LongAttackSound());
     }
 
     private void OnTriggerEnter(Collider other) {

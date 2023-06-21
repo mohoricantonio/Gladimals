@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1956,6 +1956,9 @@ MonoBehaviour:
   currentHealth: 0
   swordCollision: 0
   deathAnim: 0
+  healthBar: {fileID: 0}
+  crowdMediumSound: {fileID: 0}
+  swordHitSound: {fileID: 8300000, guid: 67f9affcafbfa1c4aa9ab61399fe8d5f, type: 3}
 --- !u!1001 &1939608514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2036,6 +2039,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 6774217289165549029, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: catMeowSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f3dc51f7d5bc4ad41b3bb60af493d4e4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 667707073900181693, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
@@ -2212,9 +2219,11 @@ MonoBehaviour:
   howToPlayUI: {fileID: 0}
   player: {fileID: 0}
   enemy: {fileID: 0}
+  arena: {fileID: 0}
   gameOverUI: {fileID: 2035658523}
   healthBarUI: {fileID: 1558350691}
   WinnerUI: {fileID: 495947179}
+  crowdHeavySound: {fileID: 0}
 --- !u!4 &2018611729
 Transform:
   m_ObjectHideFlags: 0
