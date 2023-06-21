@@ -17,7 +17,7 @@ public class EnemyHealth : MonoBehaviour
     private AudioSource playerAudioSource;
     private Animator animator;
 
-    public float timeBetwwenDamageCombo = 1.0f;
+    public float timeBetweenDamageCombo = 1.0f;
     private float lastHitTime = 0f;
     private int attackComboCounter = 0;
 
@@ -86,11 +86,12 @@ public class EnemyHealth : MonoBehaviour
 
     public void NormalDamaged()
     {
-        if(Time.time - lastHitTime <= timeBetwwenDamageCombo && attackComboCounter == 2)
+        float now = Time.time;
+        if((now - lastHitTime <= timeBetweenDamageCombo) && attackComboCounter == 2)
         {
             TakeDamage(30);
         }
-        else if(Time.time - lastHitTime <= timeBetwwenDamageCombo && attackComboCounter == 3)
+        else if((now - lastHitTime <= timeBetweenDamageCombo) && attackComboCounter == 3)
         {
             TakeDamage(60);
             attackComboCounter = 0;
@@ -101,6 +102,7 @@ public class EnemyHealth : MonoBehaviour
             playerScript.enemyIsHitable = false;
             GetComponent<EnemyMovement>().Hited();
             playerAudioSource.PlayOneShot(swordHitSound);
+            attackComboCounter = 1;
         }
     }
 
