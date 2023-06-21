@@ -45,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource audioSource;
 
     private bool isPlayingStepSound;
-    private float stepSoundDelay = 0.3f;
+    private float stepSoundDelay = 0.2f;
+    private float originalStepSoundDelay;
     public bool canMoove = true;
     public float canMooveCooldown = 0;
 
@@ -64,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         isDoubleJumping = false;
         audioSource = GetComponent<AudioSource>();
         originalMovementSpeed = movementSpeed;
+        originalStepSoundDelay = stepSoundDelay;
 
         anim.SetBool("CanMove", true);
         anim.SetBool("Weapon drawn", false);
@@ -75,11 +77,14 @@ public class PlayerMovement : MonoBehaviour
         if (anim.GetBool("Weapon drawn") && movementSpeed == originalMovementSpeed)
         {
             movementSpeed = movementSpeed / 1.5f;
+            stepSoundDelay = 0.3f;
         }
-        else
+        else if (!anim.GetBool("Weapon drawn") && movementSpeed != originalMovementSpeed)
         {
             movementSpeed = originalMovementSpeed;
+            stepSoundDelay = originalStepSoundDelay;
         }
+
         if (isDashing || !canMoove)
         {
             return;
