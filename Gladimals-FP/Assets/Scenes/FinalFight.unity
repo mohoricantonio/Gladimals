@@ -145,7 +145,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7b98ba88b9ba637468e3f5e70f85dbe1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.505
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3619,6 +3619,10 @@ PrefabInstance:
     - target: {fileID: 2208726218215784667, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083096855926895184, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.755
       objectReference: {fileID: 0}
     - target: {fileID: 3202301768241615837, guid: a01d681efab2aa749a4a42cca83a1674, type: 3}
       propertyPath: m_WarningMessage
